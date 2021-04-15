@@ -1,4 +1,4 @@
-#Laravel Ignore
+#Laravel Ignore Files
 
 /vendor/
 node_modules/
