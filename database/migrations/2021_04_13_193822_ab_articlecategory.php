@@ -26,9 +26,11 @@ class AbArticlecategory extends Migration
                                    NULL, falls es keine Elternkategorie gibt und es sich um eine
                                    Wurzelkategorie handelt.');
 
-            // nur wenn beide zusammen unique sind möglich
-//            $table->unique('id', 'ab_parent');
-//            $table->foreign('ab_parent')->references('id')->on('ab_articlecategory');
+
+
+            // nur wenn beide zusammen unique sind möglich, aber dann seeding probleme
+            // $table->unique('id', 'ab_parent');
+            // $table->foreign('ab_parent')->references('id')->on('ab_articlecategory');
         });
     }
 

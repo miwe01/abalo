@@ -15,7 +15,7 @@ class DevelopmentData extends Seeder
     public function run()
     {
         // User File
-        $file = fopen(base_path('/public/user.csv'),"r");
+        $file = fopen(base_path('/public/csv/user.csv'),"r");
         $i = 0;
         while($row = fgets($file))
         {
@@ -36,7 +36,7 @@ class DevelopmentData extends Seeder
 
 
         // Article File
-        $file = fopen(base_path('/public/articles.csv'),"r");
+        $file = fopen(base_path('/public/csv/articles.csv'),"r");
         $i = 0;
         while($row = fgets($file))
         {
@@ -59,7 +59,7 @@ class DevelopmentData extends Seeder
 
 
         //File Article Category
-        $file = fopen(base_path('/public/articlecategory.csv'),"r");
+        $file = fopen(base_path('/public/csv/articlecategory.csv'),"r");
         $i = 0;
         while($row = fgets($file))
         {

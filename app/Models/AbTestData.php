@@ -13,8 +13,7 @@ class AbTestData extends Model
 
     public function index(){
         foreach (AbTestData::all() as $test) {
-            echo $test->id;
-            echo $test->ab_testname;
+            echo $test->id . ' ' . $test->ab_testname . '<br>';
         }
     }
 
