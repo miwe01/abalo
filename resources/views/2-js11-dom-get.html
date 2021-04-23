@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>-js11-dom-get</title>
+</head>
+<script>
+    "use strict";
+</script>
+<body>
+<h1 id="header">Überschrift</h1>
+<p class="header">Text1</p>
+<p >Text2</p>
+<p>Text3</p>
+<input type="checkbox" name="user">Über 18?<br><br>
+
+<button onclick="document.getElementById('header').innerHTML='Überschrift geändert';">Überschrift ändern über ID</button>
+<button onclick="document.getElementsByClassName('header')[0].innerText='Text1 geändert';">Paragraph über Klasse ändern</button>
+<button onclick="document.getElementsByTagName('p')[1].innerHTML='Text2 geändert';">2 Paragraph ändern über Tag</button>
+<button onclick="document.getElementsByName('user')[0].checked='Text2 geändert';">Checkbox anklicken über Name</button>
+</body>
+</html>

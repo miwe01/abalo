@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2-js14-cookie.html</title>
+</head>
+<body>
+<script>
+    function cookiestatus(cname){
+        var ca = document.cookie.split(';')[0];
+        return ca.substr(ca.indexOf("=") + 1, ca.length-1);
+    }
+    function checkCookie(cname){
+        var ca = document.cookie.split('=')[0];
+        // wenn counter existiert erhöhe ansonsten erstelle
+        if (ca === cname){
+            let counter = parseInt(cookiestatus("counter")) + 1;
+
+            document.cookie = "counter=" + counter + "; expires=Thu, 01 Jan 2023 00:00:00 UTC; path=/;";
+        }
+        else{
+            document.cookie = "counter=1; expires=Thu, 01 Jan 2022 00:00:00 UTC; path=/;";
+        }
+    }
+
+
+    checkCookie("counter");
+    console.log("Counter: " +cookiestatus("counter"));
+</script>
+</body>
+</html>

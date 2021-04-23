@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2-js5-array</title>
+</head>
+<script>
+    console.log("a)");
+
+    let a = ["erstes", "zweites", 3, 4];
+    console.info('For-Schleife');
+    for (let i=0;i<a.length;i++){
+        console.log(i + " " + a[i]);
+    }
+    console.info('Foreach-Schleife');
+    a.forEach(function (value, index){
+        console.log(index + " " + value);
+    });
+    console.info('For-of-Schleife');
+    let i = 0;
+    for (const el of a){
+        console.log(i++ + " " + el);
+    }
+
+    console.log("b)");
+    console.info("5tes Element hinzugefügt")
+    a.push("5tes");
+    for (let i=0;i<a.length;i++){
+        console.log(i + " " + a[i]);
+    }
+
+    console.info("Letztes Element entfernt")
+    a.pop();
+    for (let i=0;i<a.length;i++){
+        console.log(i + " " + a[i]);
+    }
+
+    console.info("2tes Element geändert")
+    a[2] = "3 wurde geändert";
+    for (let i=0;i<a.length;i++){
+        console.log(i + " " + a[i]);
+    }
+
+    console.log("c)");
+
+    console.log("Länge von Array ist " + a.length)
+    console.log("Array wurde sortiert")
+    a.sort();
+    for (let i=0;i<a.length;i++){
+        console.log(i + " " + a[i]);
+    }
+    console.log("Finde erstes Element was größer als 2 ist:" + a.find(element => element > 2));
+    console.log("Filtere Wörter die mehr als 3 Buchstaben haben:" + a.filter(word => word.length > 3));
+    console.log("Benutze Map um hinter jedes Element 'map' anzuhängen");
+    console.log(a.map(el => el + " map"));
+    console.log("Slice Array so, dass ich nur die 2 ersten Element zurückbekomme");
+    console.log(a.slice(0, 2));
+
+
+
+
+</script>
+<body>
+
+</body>
+</html>

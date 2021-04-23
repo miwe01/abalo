@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2-js6-kontrollstrukturen</title>
+    <script>
+        console.log("If-Else Konstrukt");
+        if (4>3){
+            console.log("4 ist größer als 3");
+        }
+        else{
+            console.log("4 ist kleiner als 3");
+        }
+
+        console.log("Switch Statement");
+        console.log("Überprüfe ob es DBWT als Fach gibt");
+        switch ("DBWT"){
+            case "ARBK":
+                console.log("Das Fach ist ARBK");
+                break;
+            case "ADS":
+                console.log("Das Fach ist ADS");
+                break;
+            case "DNIS":
+                console.log("Das Fach ist DNIS");
+                break;
+            case "DBWT":
+                console.log("Das Fach ist DBWT");
+                break;
+            default:
+                console.log("Das Fach gibt es nicht");
+                break;
+        }
+
+        console.log("For-Schleife");
+        console.log("Gebe jeden Buchstaben vom Wort 'Javascript' aus");
+        let s = "Javascript";
+        for (let i=0; i<s.length;i++){
+            console.log(s[i]);
+        }
+
+        console.log("While-Schleife");
+        console.log("Von 10 runter zählen")
+        let j = 10;
+        while(j>0){
+            console.log(j);
+            j--;
+        }
+        console.log("Do-While-Schleife");
+        console.log("1-5 hochzählen")
+        let z = 1;
+        do {
+            console.log("Zahl: " + z);
+            z++;
+        }
+        while(z<6);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

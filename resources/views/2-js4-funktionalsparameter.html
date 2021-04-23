@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2-js4-funktionalsparameter</title>
+    <script>
+        function mul(fn, a, b){
+            return fn(a,b);
+        }
+
+        let x = mul(function (a, b){
+            return a*b;
+        }, 4, 5);
+        console.log(x);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

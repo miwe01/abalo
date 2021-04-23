@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2-js12-dom-createElement</title>
+</head>
+<body>
+<script>
+    let f = document.createElement("form");
+    let i = document.createElement("input");
+    let s = document.createElement("select");
+    let o1 = document.createElement("option");
+    let o2 = document.createElement("option");
+    let b = document.createElement("button");
+
+    o1.innerText = "True";
+    o2.innerText = "False";
+    b.innerText = "Submit";
+    i.setAttribute("placeholder", "Username");
+    b.setAttribute("type", "submit");
+
+    s.appendChild(o1);
+    s.appendChild(o2);
+
+
+    f.appendChild(i);
+    f.appendChild(s);
+    f.appendChild(b);
+
+  document.body.appendChild(f);
+
+
+</script>
+</body>
+</html>
