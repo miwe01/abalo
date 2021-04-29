@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>M2 Aufgabe5</title>
+</head>
+<script>
+    var data = {
+        'produkte': [
+            { name: 'Ritterburg', preis: 59.99, kategorie: 1, anzahl: 3 },
+            { name: 'Gartenschlau 10m', preis: 6.50, kategorie: 2, anzahl: 5 },
+            { name: 'Robomaster' ,preis: 199.99, kategorie: 1, anzahl: 2 },
+            { name: 'Pool 250x400', preis: 250, kategorie: 2, anzahl: 8 },
+            { name: 'Rasenmähroboter', preis: 380.95, kategorie: 2, anzahl: 4 },
+            { name: 'Prinzessinnenschloss', preis: 59.99, kategorie: 1, anzahl: 5 }
+        ],
+        'kategorien': [
+            { id: 1, name: 'Spielzeug' },
+            { id: 2, name: 'Garten' }
+        ]
+    };
+
+    function getMaxPreis(data){
+        let p = data.produkte;
+        let max = 0;
+        for (let i=0;i<p.length;i++){
+            if (p[i]["preis"]>max){
+                console.log(i);
+                max = p[i]["preis"];
+            }
+            // console.log(p[i]["name"]);
+        }
+
+        return max;
+    }
+
+    function getMinPreis(data){
+        let p = data.produkte;
+        let min = 10000;
+        for (let i=0;i<p.length;i++){
+            if (p[i]["preis"]<min){
+                min = p[i];
+            }
+        }
+        console.log(min);
+        return min;
+    }
+
+    function getPreisSum(data){
+        let p = data.produkte;
+        let sum = 0;
+        for (let i=0;i<p.length;i++){
+                sum += p[i]["preis"];
+        }
+        return sum;
+    }
+
+    function getGesamtWert(data){
+        let p = data.produkte;
+        let sum = 0;
+        for (let i=0;i<p.length;i++){
+            sum += p[i]["preis"] * p[i]["anzahl"];
+        }
+        return sum;
+    }
+    function getAnzahlProdukteOfKategorie(data, kategorie){
+
+        let p = data.produkte;
+        let k = data.kategorien;
+        let id = 0;
+        let sum = 0;
+        let check = false;
+        for (let j=0;j<=k.length;j++){
+            // checkt wenn Kategorie existiert
+            if (kategorie === k[j].name){
+                check = true;
+                id = k[j].id;
+                break
+            }
+        }
+        console.log("hallo");
+
+        // kategorie check
+        if (check === false)
+            return "NULL";
+
+        // Zählt Anzahl aller Produkte aus dieser Kategorie
+        for (let i=0;i<p.length;i++){
+            if(p[i].kategorie === id)
+                sum+= p[i]["anzahl"];
+        }
+        return sum;
+    }
+
+
+    console.log("Der Produkt mit dem höchsten Preis ist: " + getMaxPreis(data));
+    console.log("Der niedrigste Preis ist: " + getMinPreis(data));
+    console.log("Die Summe aller Produkte ist: " + getPreisSum(data));
+    console.log("Der Gesamtwert aller Produkte ist: " + getGesamtWert(data));
+    console.log("Anzahl aller Produkte aus der Kategoie Spielzeug ist: " + getAnzahlProdukteOfKategorie(data, "Spielzeug"));
+</script>
+<body>
+
+
+</body>
+</html>

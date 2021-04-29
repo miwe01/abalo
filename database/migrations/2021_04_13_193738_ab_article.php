@@ -15,7 +15,7 @@ class AbArticle extends Migration
     {
         //
         Schema::create('ab_article', function(Blueprint $table){
-            $table->bigInteger('id')->primary()->comment('Primärschlüssel');
+            $table->bigInteger('id')->primary()->nullable()->comment('Primärschlüssel');
             $table->string('ab_name', 80)->nullable(false)->comment('Name');
             $table->integer('ab_price')->nullable(false)->comment('Preis in Cent');
             $table->string('ab_description', 1000)->nullable(false)->comment('Beschreibung, die die Güte oder die Beschaffenheit näherdarstellt. Wird durch den „Ersteller“ (Benutzer) gepflegt');

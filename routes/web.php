@@ -25,3 +25,8 @@ Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->n
 Route::get('/isloggedin', [App\Http\Controllers\AuthController::class, 'isloggedin'])->name('haslogin');
 
 Route::get('/articles', [App\Http\Controllers\ArticlesController::class, 'search'])->name('search');
+Route::get('/menue', function(){
+   return view('m2_menue');
+});
+
+Route::any('/newarticle', [\App\Http\Controllers\ArticlesController::class, 'insertArticle']);
