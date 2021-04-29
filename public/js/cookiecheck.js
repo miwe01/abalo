@@ -1,6 +1,13 @@
 function cookiestatus(cname){
-    var ca = document.cookie.split(';')[1];
-    return ca.substr(ca.indexOf("=") + 1, ca.length-1);
+    var ca = document.cookie.split(';');
+
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        if (c.indexOf(cname) !== -1) {
+            return c.substr(c.indexOf("=") + 1, c.length - 1);
+        }
+    }
+    return false;
 }
 
 
@@ -32,9 +39,8 @@ function setCookieDiv(){
 }
 
 function acceptCookie(){
-    if (cookiestatus("check") !== "true"){
+    if (cookiestatus("check") !== false){
         document.cookie = "check=true; expires=Thu, 01 Jan 2022 00:00:00 UTC; path=/;";
         document.getElementsByTagName('div')[0].style.visibility = "hidden";
     }
-
 }

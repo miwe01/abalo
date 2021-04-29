@@ -6,28 +6,32 @@
 </head>
 <body>
 <script>
-    let f = document.createElement("form");
-    let i = document.createElement("input");
-    let s = document.createElement("select");
-    let o1 = document.createElement("option");
-    let o2 = document.createElement("option");
-    let b = document.createElement("button");
+    function create(name){
+        return document.createElement(name);
+    }
 
+    let f = create("form");
+    let i = create("input");
+    let s = create("select");
+    let o1 = create("option");
+    let o2 = create("option");
+    let b = create("button");
+
+    i.setAttribute("placeholder", "Username");
     o1.innerText = "True";
     o2.innerText = "False";
+
     b.innerText = "Submit";
-    i.setAttribute("placeholder", "Username");
     b.setAttribute("type", "submit");
 
     s.appendChild(o1);
     s.appendChild(o2);
 
-
     f.appendChild(i);
     f.appendChild(s);
     f.appendChild(b);
 
-  document.body.appendChild(f);
+    document.body.appendChild(f);
 
 
 </script>

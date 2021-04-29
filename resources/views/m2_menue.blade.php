@@ -8,33 +8,58 @@
 
 <body>
 <script>
-    function create($s){
-        return document.createElement($s);
+    function create(name){
+        return document.createElement(name);
     }
-let nav = create('nav');
-let ul1 = create('ul');
-let ul2 = create('ul');
-let li1 = create('li');
-let li2 = create('li');
-let li3 = create('li');
-let li4 = create('li');
-let li5 = create('li');
-let li6 = create('li');
 
-li1.innerText = "Home";
-li2.innerText = "Kategorien";
+    function createMenu(menu){
+        let nav = create('nav');
+        let ul = create('ul');
 
-li3.innerText = "Verkaufen";
-li4.innerText = "Unternehmen";
-li5.innerText = "Philosophie";
-li6.innerText = "Karriere";
+        let elements = menu["el"];
 
-ul2.append(li5, li6);
-ul1.append(li1, li2, li3, li4, ul2);
-nav.append(ul1);
+        for (let i=0;i<elements.length;i++){
+            let e = create("li")
+            e.innerText = elements[i].name;
+            ul.append(e);
 
-document.body.appendChild(nav);
+            // if submenu exists
+            if (elements[i].sub === true){
+                let sub_ul = create('ul');
+                let j = 1;
 
+                for (j=1; j<=elements[i].anzahl;j++)
+                {
+                    let sub_e = create("li");
+                    sub_e.innerText = elements[i+j].name;
+                    sub_ul.append(sub_e);
+                }
+                ul.append(sub_ul);
+                i += elements[i].anzahl;
+            }
+        }
+        nav.append(ul);
+
+        document.body.appendChild(nav);
+    }
+
+    let menu = {
+        el:
+        [
+            {name:"Home", link: "home"},
+            {name: "Kategorien", link: "kategorien", sub:false},
+            {name: "Verkaufen", link: "verkaufen", sub:false},
+            {name: "Unternehmen", link:"unternehmen", sub:true, anzahl: 2},
+            {name: "Philosophie", link:"Philosophie", sub:false},
+            {name: "Karriere", link: "karriere", sub: false},
+        ]
+    };
+
+    createMenu(menu);
+
+// Cookie akzeptieren reset
+//document.cookie = "check=false; expires=Thu, 01 Jan 2022 00:00:00 UTC; path=/;";
+console.log(document.cookie);
 
 
 setCookieDiv();
