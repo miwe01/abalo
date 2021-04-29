@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>2-js19-timeout</title>
+</head>
+<body onload="change()">
+<div id="div">Das ist ein Div Container</div>
+
+<script>
+    // strict mode
+    function change(){
+        let d = document.getElementById('div').style;
+        setInterval(function(){
+            switch (d.backgroundColor){
+                case "":
+                    d.backgroundColor = "red";
+                    break;
+                case "red":
+                    d.backgroundColor = "white";
+                    break;
+                case "white":
+                    d.backgroundColor = "red";
+                    break;
+
+            }
+            }, 1000);
+    }
+</script>
+</body>
+</html>

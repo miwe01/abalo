@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>2-js17-click</title>
+</head>
+<body>
+
+<p id="para">Ich bin ein Paragraph</p>
+<button onclick="change()">Drück mich</button>
+
+<script>
+    function change(){
+
+        let p = document.getElementById('para').style;
+        switch (p.color){
+            case "":
+                p.color ="red";
+                break;
+            case "red":
+                p.color = "#FFD700";
+                break;
+            case "rgb(255, 215, 0)":
+                p.color = "green";
+                break;
+            case "green":
+                p.color = "red";
+                break;
+        }
+
+    }
+</script>
+</body>
+</html>

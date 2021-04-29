@@ -5,6 +5,41 @@
     <title>2-js16-class</title>
 </head>
 <body>
+<script>
+    class User{
+        constructor(f, l) {
+            this.firstname = f;
+            this.lastname = l;
+        }
+        setFirstName(f){
+            this.firstname = f;
+        }
+        setLastName(l){
+            this.lastname = l;
+        }
 
+        getFirstName(){
+            return this.firstname;
+        }
+        getLastName(){
+            return this.lastname;
+        }
+    }
+
+    class Benutzer extends User{
+        setLastBuy(buy){
+            this.lastBuy = buy;
+        }
+        getLastBuy(){
+            return this.lastBuy;
+        }
+    }
+
+    let user = new User("Mika", "Weber");
+    console.log(user.getFirstName() + " " + user.getLastName());
+    let benutzer = new Benutzer("Peter", "Braun");
+    benutzer.setLastBuy("Computer");
+    console.log(benutzer.getFirstName() + " " + benutzer.getLastName()+ " hat zuletzt einen " + benutzer.getLastBuy() + " gekauft");
+</script>
 </body>
 </html>
