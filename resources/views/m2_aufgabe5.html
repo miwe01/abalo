@@ -23,27 +23,27 @@
     function getMaxPreis(data){
         let p = data.produkte;
         let max = 0;
+        let name = "";
         for (let i=0;i<p.length;i++){
             if (p[i]["preis"]>max){
-                console.log(i);
                 max = p[i]["preis"];
+                name = p[i]["name"];
             }
-            // console.log(p[i]["name"]);
         }
-
-        return max;
+        return name;
     }
 
     function getMinPreis(data){
         let p = data.produkte;
         let min = 10000;
+        let minProdukt = "";
         for (let i=0;i<p.length;i++){
             if (p[i]["preis"]<min){
-                min = p[i];
+                min = p[i]["preis"];
+                minProdukt = p[i];
             }
         }
-        console.log(min);
-        return min;
+        return minProdukt;
     }
 
     function getPreisSum(data){
@@ -64,21 +64,18 @@
         return sum;
     }
     function getAnzahlProdukteOfKategorie(data, kategorie){
-
         let p = data.produkte;
         let k = data.kategorien;
-        let id = 0;
-        let sum = 0;
+        let id, sum = 0;
         let check = false;
         for (let j=0;j<=k.length;j++){
-            // checkt wenn Kategorie existiert
+            // checkt wenn Kategorie existiert aus Parameter
             if (kategorie === k[j].name){
                 check = true;
                 id = k[j].id;
                 break
             }
         }
-        console.log("hallo");
 
         // kategorie check
         if (check === false)
@@ -92,12 +89,15 @@
         return sum;
     }
 
+    let minArtikel = getMinPreis(data);
 
-    console.log("Der Produkt mit dem höchsten Preis ist: " + getMaxPreis(data));
-    console.log("Der niedrigste Preis ist: " + getMinPreis(data));
+    console.log("Das Produkt mit dem höchsten Preis ist: " + getMaxPreis(data));
+
+    console.log("Der niedrigste Preis ist: " + minArtikel["name"], minArtikel["preis"] + "€");
     console.log("Die Summe aller Produkte ist: " + getPreisSum(data));
     console.log("Der Gesamtwert aller Produkte ist: " + getGesamtWert(data));
-    console.log("Anzahl aller Produkte aus der Kategoie Spielzeug ist: " + getAnzahlProdukteOfKategorie(data, "Spielzeug"));
+    console.log("Anzahl aller Produkte aus der Kategorie Spielzeug ist: " + getAnzahlProdukteOfKategorie(data, "Spielzeug"));
+    console.log("Anzahl aller Produkte aus der Kategorie Garten ist: " + getAnzahlProdukteOfKategorie(data, "Garten"));
 </script>
 <body>
 
