@@ -25,12 +25,13 @@ class ArticlesController extends Controller
         if (isset($_POST["name"]) && isset($_POST["price"]) && isset($_POST["description"])){
             $a = (new Article())->insertArticle();
 
+
             if ($a){
-                return view('m2_newarticle', ['success' =>'SUCESS']);
+                return view('m2_newarticle', ["success" =>'SUCESS']);
             }
             else{
 
-                return view('m2_newarticle', ['error' =>'ERROR']);
+                return view('m2_newarticle', ["error" =>'ERROR']);
             }
 
         }
