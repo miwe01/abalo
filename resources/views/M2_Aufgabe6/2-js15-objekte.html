@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2-js15-objekte.html</title>
+</head>
+<body>
+<script>
+    let car = {
+        'marke': "Audi",
+        'type': "TT",
+        'price': "40.000"
+    };
+    console.log("Json-Objekt:");
+    console.log(car.marke, car.type, car.price+"€");
+
+
+    function Schüler(vorname, nachname, matrikelnummer){
+        this.vorname = vorname;
+        this.nachname =nachname;
+        this.matrikelnummer = matrikelnummer;
+
+        this.getSchueler = function(){
+            return this.vorname + " " + this.nachname + " " + this.matrikelnummer;
+        }
+    }
+
+    var s = new Schüler("Mika", "Weber", 3252173);
+    console.log("Funktion-Objekt:");
+    console.log(s.getSchueler());
+
+    class Haus{
+        constructor(nr, strasse, land) {
+            this.nr = nr;
+            this.strasse = strasse;
+            this.land = land;
+        }
+
+        getHaus(){
+            return this.nr + " " + this.strasse + " " + this.land;
+        }
+    }
+    let h = new Haus(20, "Helmingerstrasse", "Deutschland");
+    console.log("Klasse-Objekt:");
+    console.log(h.getHaus());
+
+
+
+
+</script>
+</body>
+</html>
