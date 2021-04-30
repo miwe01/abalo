@@ -1,0 +1,20 @@
+Aufgabe4
+
+Sprachen: C++, Javascript
+
+Unterschiede
+C++ compiled, Js interpretiert vom Browser
+C++ verschiedene typen für verschiedene Zwecke, Js nur einen Typ Namen (var/let)
+Js script language, C++ proramming language
+Js ursprüngliche idee war es um mit webseiten zu interagieren während C++ für alles zu programmieren (vorallem als Backbone)
+C++ hat pointer, Js nicht
+Javascript ist eine höhere Sprache wie C++
+
+
+Gemeinsamkeiten
+Beide haben Klassenuntersützung
+Werden für viele verschiedene Applikationen benutzt
+Haben einen riesen Support und Community hinter sich
+Sehr viele Librarires
+Beide haben Kontrollstrukturen
+Sind beide sehr beliebte Sprachen (unter Top10)
