@@ -17,34 +17,86 @@
     {{"Fehler beim einfügen"}}
 @endif
 <script>
+    function sendData(name, preis, beschreibung, token){
+
+
+
+
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', '/newarticle');
+        // xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.setRequestHeader("X-CSRF-Token", token);
+
+
+        let formData = new FormData();
+        formData.append("name", name);
+        formData.append("price", preis);
+        formData.append("description", beschreibung);
+        xhr.send(formData);
+        //formData.append("_token", token);
+        xhr.onreadystatechange = function() {
+            console.log(xhr.status);
+            if (xhr.readyState === 4 && xhr.status === 200) {
+               // console.log(xhr.responseText);
+                let json = JSON.parse(xhr.responseText);
+                 console.log(json["sucess"]);
+                 if (json["sucess"] === "SUCESS"){
+                     document.getElementById('ausgabe').innerText = "Das Produkt wurde erfolgreich hinzugefügt";
+                 }
+                 else{
+                     document.getElementById('ausgabe').innerText = "Fehler beim einfügen";
+                 }
+                //console.log(xhr.responseText);
+
+            }
+            else{
+                console.log(xhr.statusText);
+            }
+        };
+
+
+
+
+
+    }
+
+
     function checkField(){
+        event.preventDefault();
         let p = document.getElementById('para');
-        let check = true;
+        //let check = true;
 
         if (document.getElementById('name').value === ""){
             p.innerText = "Artikelname ist leer";
-            check = false;
+           // check = false;
         }
         else if(document.getElementById('price').value === ""){
             p.innerText = "Preis ist leer";
-            check = false;
+           // check = false;
         }
         else if (document.getElementById('price').value <= 0){
             p.innerText = "Ungültiger Preis";
-            check = false;
+          //  check = false;
         }
 
         else if (document.getElementById('description').value === ""){
             p.innerText = "Beschreibung ist leer";
-            check = false;
+          //  check = false;
         }
-
-        if (check === false)
-            return false;
-
+        //
+        // if (check === false)
+        //     return false;
+        //
+        let name = document.getElementById('name').value;
+        let price = document.getElementById('price').value;
+        let description = document.getElementById('description').value;
+        let token = document.getElementById('token').value;
+        sendData(name, price, description, token);
+        return false;
        // document.getElementById('neuer_artikel').submit();
     }
-
 
     let f =document.createElement('form');
     let i1 = document.createElement('input');
@@ -60,18 +112,17 @@
 
     f.setAttribute('method', 'post');
     f.setAttribute('action', '/newarticle');
-    f.setAttribute('onsubmit', 'return checkField()');
+   // f.setAttribute('onsubmit', 'return checkField()');
     f.setAttribute('id', 'neuer_artikel')
 
     btn.innerText = "Senden";
-    //btn.setAttribute('name', 'submit');
     btn.setAttribute('onclick', 'checkField()');
 
+    i1.setAttribute('value', 'Artikelname');
+    i2.setAttribute('value', '1');
+    i3.setAttribute('value', 'Beschreibung');
 
-    i1.setAttribute('placeholder', 'Artikelname');
-    i2.setAttribute('placeholder', 'Preis');
     i2.setAttribute('type', 'number');
-    i3.setAttribute('placeholder', 'Beschreibung');
 
     i1.setAttribute('name', 'name');
     i2.setAttribute('name', 'price');
@@ -81,11 +132,10 @@
     i2.setAttribute('id', 'price');
     i3.setAttribute('id', 'description');
 
+    csrf.setAttribute("id", "token");
     csrf.setAttribute("type","hidden");
     csrf.setAttribute("name","_token");
     csrf.setAttribute("value","{{csrf_token()}}")
-
-
 
     f.appendChild(i1);
     f.appendChild(linebreak);
@@ -103,13 +153,11 @@
     f.appendChild(p);
 
 
-
     document.body.appendChild(f);
 
     //document.cookie = "check=false; expires=Thu, 01 Jan 2022 00:00:00 UTC; path=/;";
     setCookieDiv();
 </script>
-
-<form method="post"></form>
+<p id="ausgabe"></p>
 </body>
 </html>

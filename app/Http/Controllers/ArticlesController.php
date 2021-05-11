@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ArticlesController extends Controller
 {
@@ -22,22 +24,60 @@ class ArticlesController extends Controller
     }
 
     public function insertArticle(){
-        if (isset($_POST["name"]) && isset($_POST["price"]) && isset($_POST["description"])){
+        return view('m2_newarticle');
+    }
+    public function insertArticleAjax(Request $r){
+        if ($r->has('name') && $r->has('price') && $r->has('description')){
             $a = (new Article())->insertArticle();
+            if ($a)
+                return response()->json(['sucess'=>"SUCESS"]);
 
-
-            if ($a){
-                return view('m2_newarticle', ["success" =>'SUCESS']);
-            }
-            else{
-
-                return view('m2_newarticle', ["error" =>'ERROR']);
             }
 
-        }
-        else{
-            return view('m2_newarticle');
-        }
+        return response()->json(['error'=>"ERROR"]);
     }
 
+    // API
+    public function index(){
+        return view('searchArticle');
+    }
+
+    public function allIds_api()
+    {
+        if (isset($_GET["search"])){
+            $a = ((new \App\Models\Article)->search($_GET['search']));
+            return response()->json(
+                $a
+               );
+        }
+
+//        if (isset($_GET["search"])){
+//           // echo $_GET["search"];
+//            $a = ((new \App\Models\Article)->search($_GET['search']));
+//          //  echo $a;
+//           // print_r($a);
+//            return response()->json(
+//              // $a
+//                array('1,2,3')
+//            );
+//        }
+//        return view('searchArticle');
+
+    }
+
+    public function addArticle_api(){
+//        echo $_POST["name"];
+       // dd($_POST);
+        if (isset($_POST["name"]) && isset($_POST["price"]) && isset($_POST["description"])){
+            $a = ((new \App\Models\Article)->insertArticle());
+            if ($a)
+                return response()->json(["id" =>$a]);
+            return response()->json("Fehler aufgetreten");
+        }
+        return response()->json("Parameter sind nicht gesetzt");
+
+    }
+    public function addArticle(){
+        return view('articles_api');
+    }
 }

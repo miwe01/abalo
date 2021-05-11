@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use mysql_xdevapi\Exception;
 
 class Article extends Model
 {
@@ -28,10 +29,12 @@ class Article extends Model
                 'ab_description' => $_POST['description'],
                 'ab_creator_id' => 1
             ]);
-            return $q;
+            return $maxId+1;
 
         }
-        return 1;
-
+        return 0;
     }
+
+
+
 }
