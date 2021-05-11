@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta id="csrf-token" content="{{ csrf_token() }}">
     <title>Artikel</title>
     <script src="{{asset("js/cookiecheck.js")}}"></script>
 
@@ -22,6 +22,7 @@
 <h1>Artikel einkaufen</h1>
 @if(!empty($articles))
     <h2>Warenkorb</h2>
+    <button onclick="newShoppingCart()">Neuen Einkaufswagen anlegen</button>
     <table id="warenkorbArtikel">
 
     </table>
@@ -37,7 +38,7 @@
             <td>{{$a->ab_description}}</td>
             <td>{{$a->ab_price}}€</td>
             <td>{{$a->ab_createdate}}</td>
-            <td><span onclick="inWarenkorb({{json_encode($a)}})" style="font-size: 20px">+</span></td>
+            <td><span onclick="inWarenkorb({{json_encode($a)}})" style="font-size: 20px;cursor: pointer">+</span></td>
         </tr>
     @endforeach
 
@@ -45,9 +46,30 @@
 @endif
 
 <script>
+    // ajax setzt artikel in Warenkorb (Serverseitig)
+    function addItemtoShoppingCart(artikelid){
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', "/api/shoppingcart");
+        // csrf token
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.setRequestHeader("X-CSRF-TOKEN",
+            document.getElementById("csrf-token").getAttribute('content')
+        );
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    console.log(xhr.responseText);
+                } else {
+                    console.error(xhr.statusText);
+                }
+            }
+        };
+        xhr.send('id=' + artikelid);
+    }
     function inWarenkorb(artikel){
-        console.log(artikel);
-        console.log(artikel.ab_name);
+        addItemtoShoppingCart(artikel.id);
+
         document.getElementById(artikel.id).parentElement.style.display = "none";
 
         let tr = document.createElement('tr');
@@ -59,8 +81,6 @@
             if (i === 0){
                 td.setAttribute('id', value + "warenkorb");
             }
-
-            console.log(value);
 
             tr.appendChild(td);
             i++;
@@ -75,12 +95,32 @@
         })
         minus.innerText = "-";
         minus.style.fontSize = "20px";
+        minus.style.cursor = "pointer";
         tdminus.append(minus);
         tr.appendChild(tdminus);
 
         document.getElementById('warenkorbArtikel').appendChild(tr);
-
     }
+
+    function newShoppingCart(){
+        var xhr = new XMLHttpRequest();
+
+        xhr.open('GET', "/articles/newShoppingCart");
+
+        //xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    console.log(xhr.responseText);
+                } else {
+                    console.error(xhr.statusText);
+                }
+            }
+        };
+        xhr.send();
+    }
+
 
     //document.cookie = "check=false; expires=Thu, 01 Jan 2022 00:00:00 UTC; path=/;";
     setCookieDiv();

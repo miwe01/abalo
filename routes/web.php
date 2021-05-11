@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('m2_menue');
 });
 
 Route::get('/testdata', [\App\Http\Controllers\AbTestDataController::class, 'index']);
@@ -29,4 +29,20 @@ Route::get('/menue', function(){
    return view('m2_menue');
 });
 
-Route::any('/newarticle', [\App\Http\Controllers\ArticlesController::class, 'insertArticle']);
+Route::get('/newarticle', [\App\Http\Controllers\ArticlesController::class, 'insertArticle']);
+Route::post('/newarticle', [\App\Http\Controllers\ArticlesController::class, 'insertArticleAjax']);
+
+// add a Shoppingcart
+Route::get('/articles/newShoppingCart', [\App\Http\Controllers\ShoppingCartController::class, 'addShoppingCart']);
+
+
+// Add item to shopping cart
+Route::post('/api/shoppingcart', [\App\Http\Controllers\ShoppingCartController::class, 'addShoppingCartItem_api']);
+
+// API
+
+//Route::get('/api/articles', [\App\Http\Controllers\ArticlesController::class, 'index']);
+//Route::get('/articles/', [\App\Http\Controllers\ArticlesController::class, 'allIds_api']);
+//
+//Route::post('/articles/', [\App\Http\Controllers\ArticlesController::class, 'addArticle_api']);
+//Route::get('/api/addArticles/', [\App\Http\Controllers\ArticlesController::class, 'addArticle']);
