@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Ajax</title>
+</head>
+<body>
+<p id="text">
+</body>
+<script>
+
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "/abalo/public/static/message.json");
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+        console.log(xhr.status);
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            let json = JSON.parse(xhr.responseText);
+            document.getElementById('text').innerHTML = json["message"];
+        }
+        else{
+            console.log(xhr.statusText);
+        }
+    };
+
+    xhr.send();
+
+</script>
+</html>

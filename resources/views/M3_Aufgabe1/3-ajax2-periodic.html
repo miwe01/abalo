@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Ajax Periodic</title>
+</head>
+<body>
+<p id="text"></p>
+</body>
+<script>
+    function x(){
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "/abalo/public/static/message.json");
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState === 4 && xhr.status === 200)
+            {
+                let json = JSON.parse(xhr.responseText);
+                document.getElementById('text').innerHTML = json["message"];
+            }else{
+                console.error(xhr.statusText);
+            }
+        }
+        xhr.send();
+    }
+
+    setInterval(()=>x(), 3000);
+</script>
+</html>

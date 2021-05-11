@@ -1,0 +1,14 @@
+M3 Aufgabe 6
+Googles WebFonts service
+
+https://www.googleapis.com/webfonts/v1/webfonts?key=YOUR-API-KEY
+
+- 1. Client Server
+- 2. Zustandlos
+- 3. Cache?? (nicht sicher) -> ich gehe mal davon aus, weil Google
+- 4. Einheitliche Schnittstelle
+- 5. Mehrschichtige Systeme?? (nicht sicher)
+
+Ich würde Level 0 sagen, weil man bekommt alle Webfonts zurück.
+
+Google arbeitet mit verschiedenen Versionen in Url /v1

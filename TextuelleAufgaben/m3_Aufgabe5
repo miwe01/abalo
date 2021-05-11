@@ -1,0 +1,37 @@
+M3 Aufgabe 5
+
+V8
+Wird in Chrome benutzt
+
+JavascriptCore
+Benutzt Safari
+
+SpiderMonkey
+Für den Firefox Browser
+
+Array.prototype.flat(depth)
+
+Kann man benutzen wird von allen Browsern (außer IE) unterstützt
+Quelle: https://v8.dev/features/array-flat-flatmap#:~:text=Array%23flat%20returns%20a%20flattened%20version%20of%20a%20given%20array.&text=The%20default%20depth%20is%201,nested%20arrays%2C%20we%20pass%20Infinity%20.
+
+let a= () => {…};
+
+Arrow Functions wurde mit ES6 eingeführt und die 3 Engines unterstützen ES6. IE unterstützt kein ES6 (es würde aber über Umwege funktionieren)
+
+Quelle: https://pulse.appsscript.info/p/2020/03/javascript-v8-arrow-functions-this-and-that-desktop-liberation/
+https://twitter.com/spidermonkeyjs/status/999953755272564737?lang=en
+https://webkit.org/blog/7536/jsc-loves-es6/
+
+toString();
+
+Wird von allen Browsern unterstützt sogar von IE, also kann man ruhig implementieren
+
+Quelle: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString
+
+Object.fromEntries()
+
+Wird von den 3 Engines unterstützt, aber manche Browser wie IE oder Samsung Browser unterstützen es nicht.
+Das heißt am besten nicht einsetzen.
+
+Quelle:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries
+https://v8.dev/features/object-fromentries
