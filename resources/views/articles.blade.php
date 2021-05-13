@@ -29,7 +29,6 @@
 
     <h2>Artikelübersicht</h2>
 
-
     <table>
     @foreach ($articles as $a)
         <tr>
@@ -38,7 +37,7 @@
             <td>{{$a->ab_description}}</td>
             <td>{{$a->ab_price}}€</td>
             <td>{{$a->ab_createdate}}</td>
-            <td><span onclick="inWarenkorb({{json_encode($a)}})" style="font-size: 20px;cursor: pointer">+</span></td>
+            <td><span onclick="inWarenkorb({{json_encode($a)}}, true)" style="font-size: 20px;cursor: pointer">+</span></td>
         </tr>
     @endforeach
 
@@ -57,19 +56,39 @@
         );
 
         xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    console.log(xhr.responseText);
-                } else {
-                    console.error(xhr.statusText);
-                }
+            if (xhr.readyState === 4 && xhr.status === 200)
+                console.log("DEBUG:" + xhr.responseText);
+            else
+                console.error("DEBUG:" + xhr.statusText);
             }
-        };
         xhr.send('id=' + artikelid);
     }
-    function inWarenkorb(artikel){
-        addItemtoShoppingCart(artikel.id);
 
+    // API um Artikel zu löschen
+    function removeItemfromShoppingCart(artikelid, shoppingid){
+        var xhr = new XMLHttpRequest();
+        xhr.open('DELETE', "/api/shoppingcart/" + shoppingid + '/articles/' + artikelid);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        // csrf token
+        xhr.setRequestHeader("X-CSRF-TOKEN",
+            document.getElementById("csrf-token").getAttribute('content')
+        );
+
+        xhr.onreadystatechange = function () {
+                if (xhr.status === 200 && xhr.readyState === 4)
+                    console.log(xhr.responseText);
+                else
+                    console.error(xhr.statusText);
+        }
+        xhr.send();
+    }
+
+    // mache Artikel in Warenkorb und lasse Artikel verschwinden
+    // außerdem füge ein Minus zum Artikel hinzu
+    function inWarenkorb(artikel){
+        // Wenn neuer Artikel soll aus Liste verschwinden
+        addItemtoShoppingCart(artikel.id);
         document.getElementById(artikel.id).parentElement.style.display = "none";
 
         let tr = document.createElement('tr');
@@ -77,7 +96,6 @@
         for (let value of Object.values(artikel)){
             let td = document.createElement('td');
             td.innerText = value;
-
             if (i === 0){
                 td.setAttribute('id', value + "warenkorb");
             }
@@ -90,8 +108,11 @@
         minus.addEventListener("click", function(){
             let el = document.getElementById(artikel.id + "warenkorb").parentElement;
             el.remove();
-
             document.getElementById(artikel.id).parentElement.style.display = "table-row";
+
+            // ajax lösche item aus db
+            // Params: Artikelid, ShoppingcartID
+            removeItemfromShoppingCart(artikel.id, 1);
         })
         minus.innerText = "-";
         minus.style.fontSize = "20px";
@@ -99,15 +120,13 @@
         tdminus.append(minus);
         tr.appendChild(tdminus);
 
-        document.getElementById('warenkorbArtikel').appendChild(tr);
+        // entweder Liste oder Warenkorb Div
+        document.getElementById("warenkorbArtikel").appendChild(tr);
     }
 
     function newShoppingCart(){
         var xhr = new XMLHttpRequest();
-
         xhr.open('GET', "/articles/newShoppingCart");
-
-        //xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
@@ -122,9 +141,10 @@
     }
 
 
+
+
     //document.cookie = "check=false; expires=Thu, 01 Jan 2022 00:00:00 UTC; path=/;";
     setCookieDiv();
-
 </script>
 </body>
 </html>

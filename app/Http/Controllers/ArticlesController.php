@@ -13,12 +13,10 @@ class ArticlesController extends Controller
     public function search(Request $r){
         if (isset($_GET['search'])){
             $a = ((new \App\Models\Article)->search($_GET['search']));
-
             return view('articles', ['articles'=>$a]);
         }
         else{
             $a = ((new \App\Models\Article)->search(""));
-
             return view('articles', ['articles'=>$a]);
         }
     }
@@ -31,13 +29,12 @@ class ArticlesController extends Controller
             $a = (new Article())->insertArticle();
             if ($a)
                 return response()->json(['sucess'=>"SUCESS"]);
-
             }
 
         return response()->json(['error'=>"ERROR"]);
     }
 
-    // API
+    // gibt
     public function index(){
         return view('searchArticle');
     }
@@ -50,24 +47,9 @@ class ArticlesController extends Controller
                 $a
                );
         }
-
-//        if (isset($_GET["search"])){
-//           // echo $_GET["search"];
-//            $a = ((new \App\Models\Article)->search($_GET['search']));
-//          //  echo $a;
-//           // print_r($a);
-//            return response()->json(
-//              // $a
-//                array('1,2,3')
-//            );
-//        }
-//        return view('searchArticle');
-
     }
 
     public function addArticle_api(){
-//        echo $_POST["name"];
-       // dd($_POST);
         if (isset($_POST["name"]) && isset($_POST["price"]) && isset($_POST["description"])){
             $a = ((new \App\Models\Article)->insertArticle());
             if ($a)

@@ -15,11 +15,10 @@ class ShoppingCartItem extends Model
 
     public function addShoppingArticle($itemid){
         $maxId = DB::table('ab_shoppingcart_item')->max('id');
-        Log::debug("check");
         // Bekomme Id von Shopping Cart
         $shoppingcardid = ((new \App\Models\ShoppingCart)->getShoppingCartId(1));
 
-        Log::debug($shoppingcardid);
+        //Log::debug($shoppingcardid);
 
         if($shoppingcardid && $itemid != ""){
             $q = DB::table('ab_shoppingcart_item')->insert([
@@ -32,4 +31,31 @@ class ShoppingCartItem extends Model
         return 0;
     }
 
+    public function removeShoppingArticle($itemid, $shoppingid){
+        if ($itemid == "" || $shoppingid == "")
+            return 0;
+        $q = DB::table('ab_shoppingcart_item')
+            ->where('id', $itemid)
+            ->where('ab_shoppingcart_id', $shoppingid)
+            ->delete();
+        return 1;
+    }
+
+    public function getAllItems(){
+        $arr = DB::table('ab_shoppingcart_item')->pluck('ab_article_id');
+        Log::debug($arr);
+        return $arr;
+    }
+
+    // Param: array von Artikelitems
+    // Return Artikel die im Moment im Shopping Cart sind
+    public function getAllShoppingArticles($shoppingID){
+        if ($shoppingID == "")
+            return false;
+        $arr = DB::table('ab_article')
+            ->select('ab_article_id.*')
+            ->join('ab_shoppingcart_item', 'ab_article.id', '=', 'ab_shoppingcart_item.ab_article_id');
+
+        return $arr;
+    }
 }

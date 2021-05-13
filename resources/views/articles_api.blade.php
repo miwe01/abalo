@@ -17,8 +17,7 @@
     var description = url.searchParams.get("description");
 
     if (price > 0 && name !== ""){
-
-        xhr.open('POST', "/articles");
+        xhr.open('POST', "/api/articles");
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.setRequestHeader("X-CSRF-TOKEN",
             document.getElementById("csrf-token").getAttribute('content')
@@ -33,9 +32,7 @@
                 }
             }
         }
-
         xhr.send('name=' + name + '&price=' + price + '&description=' + description);
-        //xhr.send();
     }
 </script>
 </body>

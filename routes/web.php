@@ -24,7 +24,7 @@ Route::get('/login', [App\Http\Controllers\AuthController::class, 'login'])->nam
 Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 Route::get('/isloggedin', [App\Http\Controllers\AuthController::class, 'isloggedin'])->name('haslogin');
 
-Route::get('/articles', [App\Http\Controllers\ArticlesController::class, 'search'])->name('search');
+Route::get('/articles', [App\Http\Controllers\ArticlesController::class, 'search']);
 Route::get('/menue', function(){
    return view('m2_menue');
 });
@@ -39,10 +39,14 @@ Route::get('/articles/newShoppingCart', [\App\Http\Controllers\ShoppingCartContr
 // Add item to shopping cart
 Route::post('/api/shoppingcart', [\App\Http\Controllers\ShoppingCartController::class, 'addShoppingCartItem_api']);
 
+//remove Item from shopping cart
+Route::delete('/api/shoppingcart/{shoppingcartid}/articles/{articleId}', [\App\Http\Controllers\ShoppingCartController::class, 'removeShoppingCartItem_api']);
+
+
 // API
 
-//Route::get('/api/articles', [\App\Http\Controllers\ArticlesController::class, 'index']);
-//Route::get('/articles/', [\App\Http\Controllers\ArticlesController::class, 'allIds_api']);
+Route::get('/api/articles', [\App\Http\Controllers\ArticlesController::class, 'index']);
+Route::get('/api/articles/', [\App\Http\Controllers\ArticlesController::class, 'allIds_api']);
 //
-//Route::post('/articles/', [\App\Http\Controllers\ArticlesController::class, 'addArticle_api']);
-//Route::get('/api/addArticles/', [\App\Http\Controllers\ArticlesController::class, 'addArticle']);
+Route::post('/api/articles', [\App\Http\Controllers\ArticlesController::class, 'addArticle_api']);
+Route::get('/api/addArticles/', [\App\Http\Controllers\ArticlesController::class, 'addArticle']);
