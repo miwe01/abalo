@@ -18,17 +18,11 @@
 @endif
 <script>
     function sendData(name, preis, beschreibung, token){
-
-
-
-
-
         let xhr = new XMLHttpRequest();
         xhr.open('POST', '/newarticle');
         // xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.setRequestHeader("X-CSRF-Token", token);
-
 
         let formData = new FormData();
         formData.append("name", name);
@@ -41,61 +35,49 @@
             if (xhr.readyState === 4 && xhr.status === 200) {
                // console.log(xhr.responseText);
                 let json = JSON.parse(xhr.responseText);
-                 console.log(json["sucess"]);
+                 console.log("sucess");
                  if (json["sucess"] === "SUCESS"){
                      document.getElementById('ausgabe').innerText = "Das Produkt wurde erfolgreich hinzugefügt";
                  }
-                 else{
-                     document.getElementById('ausgabe').innerText = "Fehler beim einfügen";
-                 }
-                //console.log(xhr.responseText);
-
             }
             else{
-                console.log(xhr.statusText);
+                document.getElementById('ausgabe').innerText = "Fehler beim einfügen";
             }
         };
-
-
-
-
-
     }
 
 
     function checkField(){
         event.preventDefault();
         let p = document.getElementById('para');
-        //let check = true;
+        let check = true;
 
         if (document.getElementById('name').value === ""){
             p.innerText = "Artikelname ist leer";
-           // check = false;
+            check = false;
         }
         else if(document.getElementById('price').value === ""){
             p.innerText = "Preis ist leer";
-           // check = false;
+            check = false;
         }
         else if (document.getElementById('price').value <= 0){
             p.innerText = "Ungültiger Preis";
-          //  check = false;
+            check = false;
         }
 
         else if (document.getElementById('description').value === ""){
             p.innerText = "Beschreibung ist leer";
-          //  check = false;
+            check = false;
         }
-        //
-        // if (check === false)
-        //     return false;
-        //
+        if (check === false)
+            return false;
+        p.innerText = "";
+
         let name = document.getElementById('name').value;
         let price = document.getElementById('price').value;
         let description = document.getElementById('description').value;
         let token = document.getElementById('token').value;
         sendData(name, price, description, token);
-        return false;
-       // document.getElementById('neuer_artikel').submit();
     }
 
     let f =document.createElement('form');
@@ -118,9 +100,9 @@
     btn.innerText = "Senden";
     btn.setAttribute('onclick', 'checkField()');
 
-    i1.setAttribute('value', 'Artikelname');
-    i2.setAttribute('value', '1');
-    i3.setAttribute('value', 'Beschreibung');
+    i1.setAttribute('placeholder', 'Artikelname');
+    i2.setAttribute('placeholder', 'Preis');
+    i3.setAttribute('placeholder', 'Beschreibung');
 
     i2.setAttribute('type', 'number');
 
