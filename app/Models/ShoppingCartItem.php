@@ -18,7 +18,7 @@ class ShoppingCartItem extends Model
         // Bekomme Id von Shopping Cart
         $shoppingcardid = ((new \App\Models\ShoppingCart)->getShoppingCartId(1));
 
-        //Log::debug($shoppingcardid);
+        //Log::debug($itemid);
 
         if($shoppingcardid && $itemid != ""){
             $q = DB::table('ab_shoppingcart_item')->insert([
@@ -31,11 +31,11 @@ class ShoppingCartItem extends Model
         return 0;
     }
 
-    public function removeShoppingArticle($itemid, $shoppingid){
+    public function removeShoppingArticle($shoppingid, $itemid){
         if ($itemid == "" || $shoppingid == "")
             return 0;
         $q = DB::table('ab_shoppingcart_item')
-            ->where('id', $itemid)
+            ->where('ab_article_id', $itemid)
             ->where('ab_shoppingcart_id', $shoppingid)
             ->delete();
         return 1;

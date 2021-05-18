@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ShoppingCartController extends Controller
 {
@@ -24,6 +25,7 @@ class ShoppingCartController extends Controller
 
     // remove Item from Shopping List
     public function removeShoppingCartItem_api($shoppingID, $artikelID){
+
         if ($shoppingID == "" || $artikelID == "")
             return response()->json('Fehler remove');
 

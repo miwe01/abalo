@@ -23,6 +23,7 @@
             let e = create("li")
             e.innerText = elements[i].name;
 
+            // M3 Aufgabe 3
             // add link to element
             link.addEventListener("click", function(){
                 elements[i].a();
@@ -34,6 +35,7 @@
             link.addEventListener("mouseout", function(){
                 e.style.cssText = 'color: inherit';
             });
+
 
             link.append(e);
             ul.append(link);

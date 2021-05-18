@@ -15,6 +15,22 @@ class Article extends Model
         return DB::table('ab_article')->where('ab_name', 'ilike', '%'.$s.'%')->get();
     }
 
+    public function allArticles(){
+        return DB::table('ab_article')
+            ->leftjoin('ab_shoppingcart_item', 'ab_article.id', '=', 'ab_shoppingcart_item.ab_article_id')
+            ->select('ab_article.*', 'ab_shoppingcart_item.ab_article_id')
+            ->get()
+            ->sortBy('id');
+    }
+    public function shoppingCartArticles(){
+        return DB::table('ab_article')
+            ->leftjoin('ab_shoppingcart_item', 'ab_article.id', '=', 'ab_shoppingcart_item.ab_article_id')
+            ->select('ab_article.*', 'ab_shoppingcart_item.ab_article_id')
+            ->whereNotNull('ab_shoppingcart_item.ab_article_id')
+            ->get();
+    }
+
+
     public function insertArticle(){
         if (isset($_POST['name']) && $_POST['name'] !== "" && isset($_POST['price']) && $_POST['price'] > 0 && isset($_POST['description']) && $_POST['description'] !== "")
         {

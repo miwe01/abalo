@@ -22,8 +22,7 @@ class AbShoppingcartItem extends Migration
             $table->timestamp('ab_createdate')->nullable(false)->default(DB::raw('CURRENT_TIMESTAMP'))->comment('Zeitpunkt der Erstellung');
 
             $table->foreign('ab_article_id')->references('id')->on('ab_article');
-            $table->foreign('ab_shoppingcart_id')->references('id')->on('ab_shoppingcart');
-                //->onDelete('cascade');
+            $table->foreign('ab_shoppingcart_id')->references('id')->on('ab_shoppingcart')->onDelete('cascade');
         });
     }
 
