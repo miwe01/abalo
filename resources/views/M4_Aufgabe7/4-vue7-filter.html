@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>filter</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+<div id="app">
+Deutsches Euro Format:
+{{ message | capitalize }}
+</div>
+<script>
+
+Vue.filter('capitalize', function (value) {
+    let deutschesFormat = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' });
+    return deutschesFormat.format(value);
+});
+
+    let data = {
+        message: '78123.60',
+    };
+    let vm = new Vue({
+        el: '#app',
+        data: data
+    });
+</script>
+</body>
+</html>

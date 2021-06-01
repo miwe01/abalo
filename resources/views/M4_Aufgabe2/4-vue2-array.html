@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>4-vue2-array.html</title>
+    <meta charset="utf-8">
+    <script src="../vue.js"></script>
+</head>
+<style>
+    table, th, td{
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    th{
+        text-align: left;
+    }
+</style>
+<body>
+<div id="app">
+    <table id="app">
+        <th>Name</th><th>Preis</th>
+        <tr v-for="el in artikel">
+            <td>
+                {{el.name}}
+            </td>
+            <td>
+                {{el.price}}€
+            </td>
+        </tr>
+    </table>
+    <br>
+    <button @click="addElement">Artikel hinzufügen</button>
+</div>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            artikel:[
+                {name: "Reifen", price: 8290},
+                {name: "Antenne drehbar. Leicht geknickt", price: 1400},
+                {name: "Opel Kadett C 1992 – wie neu", price: 15000},
+            ]
+        },
+        methods:{
+            addElement: function(){
+                    var el = {};
+                    el.name = "Radio – UKW";
+                    el.price = 65;
+                    this.artikel.push(el);
+                }
+            }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>First Vue</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+<div id="app">
+    {{ msg.toLowerCase() }}<br>
+    {{ msg.toUpperCase() }}
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            msg: 'Hallo Welt'
+        }
+    });
+</script>
+</body>
+</html>

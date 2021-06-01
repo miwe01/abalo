@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interaktion</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <parent-component></parent-component>
+</div>
+
+<script>
+    Vue.component('parent-component', {
+        template:  `<child-component v-on:childevent="handleChildEvent"></child-component>`,
+        methods: {
+            handleChildEvent: function(){
+                console.log('Kind Event erhalten');
+            }
+        }
+    })
+
+    Vue.component('child-component', {
+        template: `<button v-on:click="doClick">Press me</button>`,
+        methods: {
+                doClick: function(){
+                    this.$emit('childevent');
+                }
+        }
+    })
+    let vue = new Vue({ el: '#app' })
+</script>
+</body>
+</html>
