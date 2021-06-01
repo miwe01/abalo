@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagination</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+<style>
+    * {
+        font-size: 30px;
+    }
+    *, *:before, *:after {
+        -webkit-user-select: none; /* Chrome/Safari */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+ */
+    }
+</style>
+<div id="app">
+    <seiten-zahl></seiten-zahl>
+</div>
+<script>
+    Vue.component('seiten-zahl', {
+        data: function () {
+            return {
+                zaehler: 1
+            }
+        },
+        template: `
+            <div>
+            <span @click="dec(zaehler)"><</span>
+            <span>{{zaehler}}</span>
+            <span @click="inc(zaehler)">></span>
+            </div>`,
+        methods: {
+            inc: function(z){
+                if (z < 10)
+                    this.zaehler += 1;
+            },
+            dec: function(z){
+                if (z > 1)
+                    this.zaehler -= 1;
+            }
+        }
+    })
+    new Vue({
+        el: "#app"
+    })
+
+</script>
+</body>
+</html>

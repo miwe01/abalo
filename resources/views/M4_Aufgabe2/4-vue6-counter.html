@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>4-vue6-counter</title>
+    <meta charset="utf-8">
+    <script src="../vue.js"></script>
+</head>
+<body>
+<div id="app">
+    {{counter}}
+    <button v-on:click="incrementCounter">Erhöhe Counter</button>
+</div>
+<script>
+    new Vue({
+        el: "#app",
+        data:{
+            counter: 0
+        },
+        methods:{
+            incrementCounter: function(){
+                this.counter += 1;
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>If Konstrukt</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+<div id="app">
+   <span v-if="serverDown">Server down</span>
+    <br>
+    <button v-on:click="toggle">An/Aus</button>
+</div>
+
+<script>
+    new Vue({
+        el: "#app",
+        data:{
+            serverDown: true
+        },
+        methods:{
+            toggle: function(){
+                this.serverDown = !this.serverDown;
+            }
+        }
+    })
+</script>
+</body>
+</html>
