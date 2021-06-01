@@ -43,10 +43,8 @@ Route::post('/api/shoppingcart', [\App\Http\Controllers\ShoppingCartController::
 Route::delete('/api/shoppingcart/{shoppingcartid}/articles/{articleId}', [\App\Http\Controllers\ShoppingCartController::class, 'removeShoppingCartItem_api']);
 
 
-// API
+// API Aufruf
 
-Route::get('/api/articles', [\App\Http\Controllers\ArticlesController::class, 'index']);
-Route::get('/api/articles/', [\App\Http\Controllers\ArticlesController::class, 'allIds_api']);
-//
-Route::post('/api/articles', [\App\Http\Controllers\ArticlesController::class, 'addArticle_api']);
+Route::get('/api/article', [\App\Http\Controllers\ArticlesController::class, 'index']);
+
 Route::get('/api/addArticles/', [\App\Http\Controllers\ArticlesController::class, 'addArticle']);

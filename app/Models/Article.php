@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class Article extends Model
 {
@@ -12,7 +13,11 @@ class Article extends Model
     protected $table = 'ab_article';
 
     public function search($s){
-        return DB::table('ab_article')->where('ab_name', 'ilike', '%'.$s.'%')->get();
+        $limit = PHP_INT_MAX;
+        if (isset($_GET["limit"]))
+            $limit = $_GET["limit"];
+        Log::debug( DB::table('ab_article')->where('ab_name', 'ilike', '%'.$s.'%')->get());
+        return DB::table('ab_article')->where('ab_name', 'ilike', '%'.$s.'%')->limit($limit)->get();
     }
 
     public function allArticles(){

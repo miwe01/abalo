@@ -15,7 +15,7 @@
     var url = new URL(window.location.href);
     var c = url.searchParams.get("search");
 
-    xhr.open('GET', "/articles?search=" + c);
+    xhr.open('GET', "/api/articles?search=" + c);
 
     //xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 

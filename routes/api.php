@@ -19,3 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/articles', "ArticlesController@all_api");
+
+
+
+Route::get('/articles', [\App\Http\Controllers\ArticlesController::class, 'allIds_api']);
+//
+Route::post('/articles', [\App\Http\Controllers\ArticlesController::class, 'addArticle_api']);

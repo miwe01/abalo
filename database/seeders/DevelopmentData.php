@@ -74,5 +74,23 @@ class DevelopmentData extends Seeder
             $i++;
         }
         fclose($file);
+
+        //File Article has Category
+        $file = fopen(base_path('/public/csv/article_has_articlecategory.csv'),"r");
+        $i = 0;
+        while($row = fgets($file))
+        {
+            if($i!=0){
+                $num = explode(";", $row);
+                DB::table('ab_article_has_articlecategory')->insert([
+                    'ab_articlecategory_id' => (int) $num[0],
+                    'ab_article_id' => (int) $num[1]
+                ]);
+            }
+            $i++;
+        }
+        fclose($file);
+
+
     }
 }

@@ -96,7 +96,8 @@ setCookieDiv();
 
 </script>
 <p>M3 API</p>
-<a href="/api/articles">Artikelsuche über Parameter (Aufgabe7 GET)</a><br>
+<a href="/api/article">Artikelsuche über Parameter (Aufgabe7 GET)</a><br>
 <a href="/api/addArticles">Artikeleingabe über Parameter (Aufgabe8 POST)</a>
+
 </body>
 </html>

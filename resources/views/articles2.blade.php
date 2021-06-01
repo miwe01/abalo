@@ -6,6 +6,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta id="csrf-token" content="{{ csrf_token() }}">
     <title>Artikel</title>
+    <script src="{{asset('js/vue.js')}}"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
     <script src="{{asset("js/cookiecheck.js")}}"></script>
 
     <style>
@@ -21,11 +24,51 @@
             padding: 10px;
         }
     </style>
+
 </head>
-<body onload="">
+<body>
 <h1>Artikel einkaufen</h1>
+
+<div id="filter-div">
+    <p>@{{message}}</p>
+    Artikel suchen:<input id="filter" type="text" @input="addEvent"><br>
+
+    <ul v-for="item in articles">
+        <li> ID: @{{item.id}} Name: @{{item.ab_name}}</li>
+    </ul>
+</div>
+
+
+<script>
+    var filter = new Vue({
+        el: "#filter-div",
+        data:{
+            message: null,
+            articles: []
+        },
+        methods:{
+            addEvent: function(event) {
+                if (event.target.value.length >= 3)
+                    this.sendAjax(event.target.value);
+                if (event.target.value.length === 0)
+                    this.articles = "";
+            },
+            sendAjax(text){
+                let s = text;
+                const limit = 5;
+                axios
+                    .get("/api/articles/?search=" + s + "&limit=" + limit)
+                    .then(response => (this.articles = response.data))
+                    .catch(error => console.log(error))
+            }
+        }
+    })
+</script>
+
+
 @if(!empty($articles))
     <h2>Warenkorb</h2>
+
     <table id="warenkorbArtikel">
         @foreach ($shoppingCartArticles as $a)
             <tr>
@@ -38,12 +81,8 @@
             </tr>
         @endforeach
 
-
-        @if($shoppingCartArticles->isEmpty())
-            <td id="warenkorb-leer">Der Warenkorb ist leer</td>
-        @endif
-
     </table>
+
 
     <h2>Artikelübersicht</h2>
 
@@ -71,14 +110,6 @@
 <script>
 
    function removeArticle(artikelid){
-       if (document.getElementById("warenkorb-leer") != null){
-           var c = document.getElementById("warenkorb-leer").parentElement.childElementCount;
-           console.log(c);
-           if (c <= 1)
-               document.getElementById("warenkorb-leer").style.display = "table-row";
-       }
-
-
        document.getElementById("warenkorb-"+ artikelid).parentElement.remove();
        document.getElementById(artikelid).parentElement.style.display = "table-row";
 
@@ -136,9 +167,6 @@
 
         addItemtoShoppingCart(artikel.id);
         document.getElementById(artikel.id).parentElement.style.display = "none";
-        if (document.getElementById("warenkorb-leer") != null)
-            document.getElementById("warenkorb-leer").style.display = "none";
-
 
         let tr = document.createElement('tr');
         let i=0;
