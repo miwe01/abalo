@@ -11,7 +11,6 @@
 
 <body>
 <div id="app">
-
     <site-header>
         <menu id="myMenu">
             <script type="module">
@@ -23,14 +22,6 @@
 
     </site-header>
     <nav id="menu"></nav>
-    <button
-        v-for="tab in tabs"
-        v-bind:key="tab"
-        v-bind:class="['tab-button', { active: currentTab === tab }]"
-        v-on:click="currentTab = tab"
-    >
-        @{{ tab }}
-    </button>
 
     <site-body v-bind:is="currentTabComponent" class="tab"></site-body>
     <site-footer>
@@ -63,11 +54,7 @@
 <script>
     Vue.component('myMenu', {
             render(h) {
-                return h('nav', {
-                    'id': {
-                        'menu': "hallo"
-                    }
-                })
+                console.log("hallo");
             }
     })
 
@@ -187,8 +174,29 @@
             currentTabComponent: function() {
                 return "tab-" + this.currentTab.toLowerCase();
             }
+        },
+        mounted: function(){
+            // Nachdem auch die ganze Webseite geladen wurde (auch import)
+            window.addEventListener('load', () => {
+                document.getElementById('li-Kategorien').addEventListener('click', function() {
+                    this.currentTab = 'Artikelliste';
+                }.bind(this), false);
+
+                document.getElementById('li-Home').addEventListener('click', function() {
+                    this.currentTab = 'Home';
+                }.bind(this), false);
+
+                document.getElementById('li-Verkaufen').addEventListener('click', function() {
+                    this.currentTab = 'Artikelsuche';
+                }.bind(this), false);
+            })
+
         }
     });
+
+
+
+
 </script>
 
 
