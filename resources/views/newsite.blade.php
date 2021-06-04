@@ -52,30 +52,14 @@
     Vue.component('tab-artikelsuche', {
         data: function(){
            return{
-               message: '', articles: '', zaehler: 0, offset: 0, limit: 2
+               message: '', articles: '', zaehler: 0, offset: 0, limit: 5
            }
         },
         template: `#filtersuche`,
         methods:{
-            // Ändert Seitenanzahl wenn genug Artikel da sind
-            changePage: function(z, msg){
-                if (z > 0 && z < 10){
-                    if (msg === "next"){
-                        this.zaehler += 1;
-                        this.offset += this.limit;
-                    }
-                    else{
-                        this.zaehler -= 1;
-                        this.offset -= this.limit;
-                    }
-                    this.addEvent();
-                }
-            },
             addEvent: function()
             {
                 let l = document.getElementById('filter').value;
-                if (l.length === 0)
-                    this.articles = "";
                 if (l.length >= 3)
                     this.sendAjax(l);
                 else{
@@ -83,6 +67,8 @@
                     this.offset=0
                     this.articles=""
                 }
+                if (l.length === 0)
+                    this.articles = "";
             },
             sendAjax(text){
                 let s = text;
@@ -90,6 +76,21 @@
                     .get("/api/articles/?search=" + s + "&limit=" + this.limit + "&offset=" + this.offset)
                     .then(response => (this.articles = response.data))
                     .catch(error => console.log(error))
+            },
+            inc: function(z){
+                if (z < 10){
+                    this.zaehler += 1;
+                    this.offset += this.limit;
+                    this.addEvent();
+                }
+            },
+            dec: function(z){
+                if (z > 0){
+                    this.zaehler -= 1;
+                    this.offset -= this.limit;
+                    this.addEvent();
+                }
+
             }
         }
     })
@@ -121,7 +122,6 @@
         },
         mounted: function(){
             // Nachdem auch die ganze Webseite geladen wurde (auch import)
-            // Click Event auf Menü
             window.addEventListener('load', () => {
                 this.addEventToMenu('li-Kategorien', 'artikelliste');
                 this.addEventToMenu('li-Home', 'home');
@@ -133,7 +133,6 @@
 
 </script>
 
-<!-- X-Template -->
 <script type="text/x-template" id="artikelliste">
 <div>
     <h2>Alle Artikel</h2>
@@ -151,7 +150,6 @@
 </div>
 </script>
 
-<!-- X-Template -->
 <script type="text/x-template" id="filtersuche">
 <div id="filter-div">
     <p>@{{message}}</p>
@@ -162,9 +160,9 @@
     </ul>
 
     <div>
-        <span @click="changePage(zaehler, 'back')"><</span>
+        <span @click="dec(zaehler)"><</span>
         <span>@{{zaehler}}</span>
-        <span @click="changePage(zaehler, 'next')">></span>
+        <span @click="inc(zaehler)">></span>
     </div>
 </div>
 </script>
