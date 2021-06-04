@@ -14,10 +14,13 @@ class Article extends Model
 
     public function search($s){
         $limit = PHP_INT_MAX;
+        $offset = 0;
         if (isset($_GET["limit"]))
             $limit = $_GET["limit"];
+        if (isset($_GET["offset"]))
+            $offset = $_GET["offset"];
         Log::debug( DB::table('ab_article')->where('ab_name', 'ilike', '%'.$s.'%')->get());
-        return DB::table('ab_article')->where('ab_name', 'ilike', '%'.$s.'%')->limit($limit)->get();
+        return DB::table('ab_article')->where('ab_name', 'ilike', '%'.$s.'%')->limit($limit)->offset($offset)->get();
     }
 
     public function allArticles(){

@@ -1,0 +1,16 @@
+M4 Aufgabe 3
+
+a) Was war die Motivation für die Entwicklung von Vue?
+Die Motivation hinter Vue ist, Evan You hatte verschiedene Frameworks versucht, die ihm seine Projekte erleichtern sollte. Er fand, aber die Frameworks entsprachen nicht seinen Vorstellungen und so enstand Vue.
+
+b)Warum hat Evan You nicht Backbone verwendet?
+Die Idee hinter Vue ist es sollte ein kleines "Utility" Werkzeug sein, das mit dem DOM interagieren sollte.
+
+c)Laravel und Vue – aus welchen Gründen passt es für den Gründer von Laravel zusammen?
+Der Gründer von Laravel versuchte React zu lernen, fand es zu "schwierig" und versuchte Vue, weil es einfacher aussieht. Dadurch hat er festgestellt Vue ist ein gutes Front End Tool was gut mit einem Backend Tool wie Laravel arbeiten könnte.
+
+d) Warum sind viele EntwicklerInnen von Angular nach Vue gewechselt?
+Angular 1 war simple und gut verständlich, aber dann haben sie Angular 2 rausgebracht und es sah komplett anders aus. Außerdem hatte Vue Features die Angular zum Teil nicht hatte.
+
+e) Was sind nach Ihrer Meinung die Gründe für den Erfolg von Vue.js?
+Man sieht schnell einen Erfolg, vue.js ist sehr klein. Laravel hat Vue Unterstützung und Laravel ist auch sehr beliebt.

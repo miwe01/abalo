@@ -42,9 +42,13 @@ Route::post('/api/shoppingcart', [\App\Http\Controllers\ShoppingCartController::
 //remove Item from shopping cart
 Route::delete('/api/shoppingcart/{shoppingcartid}/articles/{articleId}', [\App\Http\Controllers\ShoppingCartController::class, 'removeShoppingCartItem_api']);
 
-
 // API Aufruf
 
 Route::get('/api/article', [\App\Http\Controllers\ArticlesController::class, 'index']);
 
 Route::get('/api/addArticles/', [\App\Http\Controllers\ArticlesController::class, 'addArticle']);
+
+
+
+// New Site
+Route::get('/newsite', [\App\Http\Controllers\ArticlesController::class, 'newSite']);

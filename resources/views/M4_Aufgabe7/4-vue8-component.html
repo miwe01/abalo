@@ -6,30 +6,27 @@
     <script src="../vue.js"></script>
 </head>
 <body>
-<div id="components-demo">
+<div id="app">
     <button-counter></button-counter>
 </div>
 
 <script>
-
-    // Define a new component called button-counter
     Vue.component('button-counter', {
         data: function () {
             return {
                 count: 1
             }
         },
-       // template: '<button v-on:click="count++">Zähler {{ count }}</button>'
         template: `
             <div>
             <button v-on:click="count++">Zähler inc</button>
             <button v-on:click="count--">Zähler dec</button>
-            <button>Zähler {{ count }}</button>
+            Zähler: {{ count }}
             </div>
             `
     })
 
-    let vue = new Vue({ el: '#components-demo' })
+    let vue = new Vue({ el: '#app' })
 </script>
 
 

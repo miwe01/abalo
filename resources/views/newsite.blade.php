@@ -15,7 +15,6 @@
         <menu id="myMenu">
             <script type="module">
                 import menu from '{{asset('js/menu.js')}}'
-
                 menu.createMenu();
             </script>
         </menu>
@@ -28,8 +27,149 @@
     </site-footer>
 </div>
 
+<script>
+    Vue.component('site-header', {
+        template: `<h1>Abalo Webshop</h1>`
+    });
+    Vue.component('site-body', {
+        template: ``
+    });
+    Vue.component('site-footer', {
+        template:
+            `<button v-on:click="$root.currentTab = 'impressum'">Impressum</button>`
+    });
+</script>
 
 
+<script>
+    Vue.component('tab-home', {
+        template: `<div>
+                    <h2>Willkommen bei Abalo</h2>
+                    <p>Abalo - Dein Online Shop</p>
+                   </div>`
+    })
+
+    Vue.component('tab-artikelsuche', {
+        data: function(){
+           return{
+               message: '', articles: '', zaehler: 0, offset: 0, limit: 2
+           }
+        },
+        template: `#filtersuche`,
+        methods:{
+            // Ändert Seitenanzahl wenn genug Artikel da sind
+            changePage: function(z, msg){
+                if (z > 0 && z < 10){
+                    if (msg === "next"){
+                        this.zaehler += 1;
+                        this.offset += this.limit;
+                    }
+                    else{
+                        this.zaehler -= 1;
+                        this.offset -= this.limit;
+                    }
+                    this.addEvent();
+                }
+            },
+            addEvent: function()
+            {
+                let l = document.getElementById('filter').value;
+                if (l.length === 0)
+                    this.articles = "";
+                if (l.length >= 3)
+                    this.sendAjax(l);
+                else{
+                    this.zaehler=0
+                    this.offset=0
+                    this.articles=""
+                }
+            },
+            sendAjax(text){
+                let s = text;
+                axios
+                    .get("/api/articles/?search=" + s + "&limit=" + this.limit + "&offset=" + this.offset)
+                    .then(response => (this.articles = response.data))
+                    .catch(error => console.log(error))
+            }
+        }
+    })
+    Vue.component('tab-artikelliste', {
+        template: `#artikelliste`
+    })
+    Vue.component('tab-impressum', {
+        template: '#checkbox-template'
+    })
+
+    new Vue({
+        el: "#app",
+        data: {
+            Impressum: '',
+            currentTab: "home",
+            tabs: ['home', 'artikelliste', 'artikelsuche']
+        },
+        computed: {
+            currentTabComponent: function() {
+                return "tab-" + this.currentTab;
+            }
+        },
+        methods:{
+            addEventToMenu: function(id, tab){
+                document.getElementById(id).addEventListener('click', function() {
+                    this.currentTab = tab;
+                }.bind(this), false);
+            }
+        },
+        mounted: function(){
+            // Nachdem auch die ganze Webseite geladen wurde (auch import)
+            // Click Event auf Menü
+            window.addEventListener('load', () => {
+                this.addEventToMenu('li-Kategorien', 'artikelliste');
+                this.addEventToMenu('li-Home', 'home');
+                this.addEventToMenu('li-Verkaufen', 'artikelsuche');
+            })
+
+        }
+    });
+
+</script>
+
+<!-- X-Template -->
+<script type="text/x-template" id="artikelliste">
+<div>
+    <h2>Alle Artikel</h2>
+    <table id="warenkorbArtikel">
+        @foreach ($articles as $a)
+            <tr>
+                <td id="warenkorb-{{$a->id}}">{{$a->id}}</td>
+                <td>{{$a->ab_name}}</td>
+                <td>{{$a->ab_price}}€</td>
+                <td>{{$a->ab_description}}</td>
+                <td>{{$a->ab_createdate}}</td>
+            </tr>
+        @endforeach
+    </table>
+</div>
+</script>
+
+<!-- X-Template -->
+<script type="text/x-template" id="filtersuche">
+<div id="filter-div">
+    <p>@{{message}}</p>
+    Artikel suchen:<input id="filter" type="text" @input="addEvent"><br>
+
+    <ul v-for="item in articles">
+        <li> ID: @{{item.id}} Name: @{{item.ab_name}}</li>
+    </ul>
+
+    <div>
+        <span @click="changePage(zaehler, 'back')"><</span>
+        <span>@{{zaehler}}</span>
+        <span @click="changePage(zaehler, 'next')">></span>
+    </div>
+</div>
+</script>
+
+<!-- X-Templates -->
 <script type="text/x-template" id="checkbox-template">
     <div class="demo-tab">
         <h1>Impressum</h1>
@@ -50,155 +190,6 @@
         <p>Internet: www.max-meister.de</p>
     </div>
 </script>
-
-<script>
-    Vue.component('myMenu', {
-            render(h) {
-                console.log("hallo");
-            }
-    })
-
-    Vue.component('tab-home', {
-        template: `<div class="demo-tab">Willkommen bei Abalo</div>`
-    })
-
-    Vue.component('tab-artikelsuche', {
-        data: function(){
-           return{
-               message: '',
-               articles: '',
-               zaehler: 0,
-               offset: 0,
-               limit: 2
-           }
-
-        },
-        template: `<div id="filter-div">
-            <p>@{{message}}</p>
-                Artikel suchen:<input id="filter" type="text" @input="addEvent"><br>
-
-                <ul v-for="item in articles">
-                    <li> ID: @{{item.id}} Name: @{{item.ab_name}}</li>
-                </ul>
-
-                <div>
-                    <span @click="dec(zaehler)"><</span>
-                    <span>@{{zaehler}}</span>
-                    <span @click="inc(zaehler)">></span>
-                  </div>
-                </div>`,
-        methods:{
-            addEvent: function(event)
-            {
-                let l = document.getElementById('filter').value;
-                if (l.length >= 3)
-                    this.sendAjax(l);
-                else{
-                    this.zaehler=0
-                    this.offset=0
-                    this.articles=""
-                }
-                if (l.length === 0)
-                    this.articles = "";
-            },
-            sendAjax(text){
-                let s = text;
-                axios
-                    .get("/api/articles/?search=" + s + "&limit=" + this.limit + "&offset=" + this.offset)
-                    .then(response => (this.articles = response.data))
-                    .catch(error => console.log(error))
-            },
-            inc: function(z){
-                if (z < 10){
-                    this.zaehler += 1;
-                    this.offset += this.limit
-                    this.addEvent();
-                }
-
-            },
-            dec: function(z){
-                if (z > 0){
-                    this.zaehler -= 1;
-                    this.offset -= this.limit
-                    this.addEvent();
-                }
-
-            }
-        }
-    })
-    Vue.component('tab-artikelliste', {
-        template: `
-        <table id="warenkorbArtikel">
-        @foreach ($articles as $a)
-        <tr>
-            <td id="warenkorb-{{$a->id}}">{{$a->id}}</td>
-                <td>{{$a->ab_name}}</td>
-                <td>{{$a->ab_price}}€</td>
-                <td>{{$a->ab_description}}</td>
-                <td>{{$a->ab_createdate}}</td>
-            </tr>
-        @endforeach
-
-        </table>`
-    })
-    Vue.component('tab-impressum', {
-        template: '#checkbox-template'
-    })
-
-
-    Vue.component('site-header', {
-        template: `<h1>Abalo</h1>
-`
-    });
-    Vue.component('site-body', {
-        template: ``
-    });
-
-
-    Vue.component('site-footer', {
-        template: `
-            <button
-                v-on:click="$root.currentTab = 'Impressum'"
-            >Impressum</button>
-            `
-    });
-
-    new Vue({
-        el: "#app",
-        data: {
-            Impressum: '',
-            currentTab: "Home",
-            tabs: ['Home', 'Artikelliste', 'Artikelsuche']
-        },
-        computed: {
-            currentTabComponent: function() {
-                return "tab-" + this.currentTab.toLowerCase();
-            }
-        },
-        mounted: function(){
-            // Nachdem auch die ganze Webseite geladen wurde (auch import)
-            window.addEventListener('load', () => {
-                document.getElementById('li-Kategorien').addEventListener('click', function() {
-                    this.currentTab = 'Artikelliste';
-                }.bind(this), false);
-
-                document.getElementById('li-Home').addEventListener('click', function() {
-                    this.currentTab = 'Home';
-                }.bind(this), false);
-
-                document.getElementById('li-Verkaufen').addEventListener('click', function() {
-                    this.currentTab = 'Artikelsuche';
-                }.bind(this), false);
-            })
-
-        }
-    });
-
-
-
-
-</script>
-
 
 
 </body>

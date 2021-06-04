@@ -61,4 +61,11 @@ class ArticlesController extends Controller
     public function addArticle(){
         return view('articles_api');
     }
+
+    public function newSite(){
+        $allArticles = ((new \App\Models\Article)->allArticles());
+        $shoppingCartArticles = ((new \App\Models\Article)->shoppingCartArticles());
+        ((new ShoppingCart)->addShoppingCart());
+        return view('newsite', ['articles'=>$allArticles, 'shoppingCartArticles'=>$shoppingCartArticles]);
+    }
 }
