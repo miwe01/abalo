@@ -19,7 +19,7 @@ class Article extends Model
             $limit = $_GET["limit"];
         if (isset($_GET["offset"]))
             $offset = $_GET["offset"];
-        Log::debug( DB::table('ab_article')->where('ab_name', 'ilike', '%'.$s.'%')->get());
+        //Log::debug( DB::table('ab_article')->where('ab_name', 'ilike', '%'.$s.'%')->get());
         return DB::table('ab_article')->where('ab_name', 'ilike', '%'.$s.'%')->limit($limit)->offset($offset)->get();
     }
 

@@ -22,6 +22,7 @@
         xhr.open('POST', '/newarticle');
         // xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
         xhr.setRequestHeader("X-CSRF-Token", token);
 
         let formData = new FormData();

@@ -17,11 +17,8 @@ class AbArticleHasArticlecategory extends Migration
     {
         //
         Schema::create('ab_article_has_articlecategory', function(Blueprint $table){
-            //$table->bigInteger('id',1)->autoIncrement();
             $table->id();
-            //$table->integer('id');
-            //$table->bigInteger('id')->comment('Primärschlüssel')->nullable(false)->default(1);
-            //$table->bigInteger('id')->primary()->comment('Primärschlüssel');
+
             $table->bigInteger('ab_articlecategory_id')->nullable(false)->comment('Referenz auf eine Artikelkategorie');
             $table->bigInteger('ab_article_id')->nullable(false)->comment('Referenz auf einen Artikel ab_articlecategory_id, ab_article_id');
             //$table->unique('ab_articlecategory_id', 'ab_article_id');
