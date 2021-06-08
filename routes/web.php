@@ -52,3 +52,8 @@ Route::get('/api/addArticles/', [\App\Http\Controllers\ArticlesController::class
 
 // New Site
 Route::get('/newsite', [\App\Http\Controllers\ArticlesController::class, 'newSite']);
+
+// Artikeleingabe Vue
+Route::get('artikeleingabe', function(){
+   return view('artikeleingabe_vue');
+});

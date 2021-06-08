@@ -39,6 +39,7 @@ class ArticlesController extends Controller
 
     public function allIds_api()
     {
+        Log::debug('check');
         if (isset($_GET["search"])){
             $a = ((new \App\Models\Article)->search($_GET['search']));
             return response()->json(
@@ -48,9 +49,13 @@ class ArticlesController extends Controller
     }
 
     // M3 Aufgabe 8
-    public function addArticle_api(){
-        if (isset($_POST["name"]) && isset($_POST["price"]) && isset($_POST["description"])){
-            $a = ((new \App\Models\Article)->insertArticle());
+    public function addArticle_api(Request $r){
+        Log::debug($r);
+        if (isset($r['name']))
+            Log::debug("namee");
+        if (isset($r["name"]) && isset($r["price"]) && isset($r["description"])){
+            $a = ((new \App\Models\Article)->insertArticle($r["name"], $r["price"], $r["description"]));
+
             if ($a)
                 return response()->json(["id" =>$a]);
             return response()->json("Fehler aufgetreten");

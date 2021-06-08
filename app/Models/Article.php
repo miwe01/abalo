@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use http\Env\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -39,17 +40,18 @@ class Article extends Model
     }
 
 
-    public function insertArticle(){
-        if (isset($_POST['name']) && $_POST['name'] !== "" && isset($_POST['price']) && $_POST['price'] > 0 && isset($_POST['description']) && $_POST['description'] !== "")
+    public function insertArticle($name, $price, $description){
+        if (isset($name) && $name !== "" && isset($price) && $price > 0 && isset($description) && $description !== "")
         {
+            Log::debug('djd');
             // gibt größte ID zurück um größte Id+1 zurückzubekommen
             $maxId = DB::table('ab_article')->max('id');
 
             $q = DB::table('ab_article')->insert([
                 'id' => $maxId +1,
-                'ab_name' => $_POST['name'],
-                'ab_price' => $_POST['price'],
-                'ab_description' => $_POST['description'],
+                'ab_name' => $name,
+                'ab_price' => $price,
+                'ab_description' => $description,
                 'ab_creator_id' => 1
             ]);
             return $maxId +1;
