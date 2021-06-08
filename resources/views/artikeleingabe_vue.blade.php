@@ -13,7 +13,20 @@
 <body>
 
 <div id="app">
-    <artikel-form></artikel-form>
+    <site-header>
+        <script type="module">
+            import menu from '{{asset('js/menu.js')}}'
+            menu.createMenu();
+        </script>
+    </site-header>
+    <nav id="menu"></nav>
+
+    <h1>------</h1>
+    <site-body v-bind:is="currentTabComponent" class="tab"></site-body>
+    <h1>------</h1>
+    <site-footer></site-footer>
+    <footer></footer>
+
 </div>
 
 </body>
