@@ -23,7 +23,13 @@ document.body.nav = "";
 document.body.nav = undefined;
 
 function createMenu(){
+    let h1 = create('h1');
+    h1.innerText = "Abalo";
+
     let ul = create('ul');
+    ul.id="main-ul";
+
+    ul.append(h1);
 
     let elements = menu["el"];
 
@@ -47,11 +53,12 @@ function createMenu(){
         });
 
         link.append(e);
-        ul.append(link);
+
 
         // if submenu exists
         if (elements[i].sub === true){
             let sub_ul = create('ul');
+            sub_ul.id = "sub-ul";
             let j = 1;
 
             for (j=1; j<=elements[i].anzahl;j++)
@@ -59,7 +66,6 @@ function createMenu(){
                 let sub_e = create("li");
                 let sub_link = create("a");
                 sub_e.innerText = elements[i+j].name;
-                console.log(j);
                 sub_link.addEventListener("mouseover", function(){
                     sub_e.style.cssText = 'color:' +  elements[j].hoverColor();
                 });
@@ -69,12 +75,14 @@ function createMenu(){
                 sub_link.append(sub_e);
                 sub_ul.append(sub_link);
             }
-            ul.append(sub_ul);
+            link.append(sub_ul);
             i += elements[i].anzahl;
         }
+
+        ul.append(link);
     }
 
-    document.getElementById('menu').append(ul);
+    document.getElementById('menu').appendChild(ul);
 }
 
 export default{

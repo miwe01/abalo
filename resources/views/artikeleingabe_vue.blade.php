@@ -6,24 +6,23 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Artikeleingabe</title>
-    <meta name="csrf-token" content="">
     <script defer src="./js/app.js"></script>
-
+    <link href="./css/app.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
 
 <div id="app">
-    <site-header>
+    <site-header id="menu">
+        <h1>Abalo</h1>
         <script type="module">
             import menu from '{{asset('js/menu.js')}}'
             menu.createMenu();
         </script>
     </site-header>
-    <nav id="menu"></nav>
-
-    <h1>------</h1>
-    <site-body v-bind:is="currentTabComponent" class="tab"></site-body>
-    <h1>------</h1>
+    <div id="tab-comp">
+     <site-body v-bind:is="currentTabComponent" class="tab"></site-body>
+    </div>
     <site-footer></site-footer>
     <footer></footer>
 

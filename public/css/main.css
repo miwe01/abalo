@@ -1,0 +1,51 @@
+h1{
+    display: inline;
+    margin-right: 50px;
+}
+
+#li-Home, #li-Kategorien, #li-Verkaufen, #li-Unternehmen{
+
+    display: inline-block;
+    list-style-type: none;
+    margin: 5px 0;
+    padding: 5px 15px;
+}
+#li-Unternehmen{
+    position: relative;
+}
+
+#tab-comp{
+    border-top: 1px dashed black;
+    border-bottom: 1px dashed black;
+    width: 100%;
+    padding-left: 170px;
+    background-color: #f0f5f1;
+}
+.tab{
+    width: 100%;
+    margin: 30px 0 30px 40px;
+}
+
+#sub-ul{
+    padding: 0;
+    position: absolute;
+    display: none;
+    max-width: 90px;
+    left: 460px;
+    margin-top: -10px;
+}
+#sub-ul a{
+    display: block;
+    padding: 5px 5px;
+    background-color: gray;
+}
+#sub-ul li{
+    list-style-type: none;
+}
+
+#li-Unternehmen:hover + #sub-ul{
+    display: block;
+}
+#sub-ul:hover{
+    display: block;
+}

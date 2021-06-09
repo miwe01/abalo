@@ -1,5 +1,5 @@
 <template>
-    <h1>Abalo Webshop</h1>
+
 </template>
 
 <script>
@@ -10,4 +10,7 @@ name: "Site-Header"
 
 <style scoped>
 
+h1{
+    margin-left: 35px;
+}
 </style>

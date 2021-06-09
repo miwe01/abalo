@@ -1,17 +1,19 @@
 <template>
     <div>
         <h2>Alle Artikel</h2>
+        <table>
         <th>ID</th><th>Name</th><th>Preis</th><th>Beschreibung</th><th>Erstellungsdatum</th>
         <tr v-for="item in allarticles">
-            <td>{{item.id}}</td> <td>{{item.ab_name}}</td><td>{{ item.ab_price }}€</td>
-            <td>{{ item.ab_description }}</td><td>{{ item.ab_createdate }}</td>
+            <td class="td-id">{{item.id}}</td> <td class="td-name">{{item.ab_name}}</td><td class="td-preis">{{ item.ab_price }}€</td>
+            <td class="td-beschreibung">{{ item.ab_description }}</td><td class="td-erstellung">{{ item.ab_createdate }}</td>
         </tr>
+        </table>
         <div>
-            <span @click="dec(zaehler)"><</span>
-            <span>{{zaehler}}</span>
-            <span @click="inc(zaehler)">></span>
+            <span @click="dec(zaehler)" class="counter"><</span>
+            <span id="zaehler">{{zaehler}}</span>
+            <span @click="inc(zaehler)" class="counter">></span>
         </div>
-        <br>
+
     </div>
 </template>
 
@@ -54,6 +56,45 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@mixin border($property){
+    border: 1px solid $property;
+}
 
+table{
+    width: 1000px;
+    margin-bottom: 20px;
+    height: 250px;
+    box-shadow: 2px 2px;
+}
+table, td, th{
+    @include border(black);
+    border-collapse: collapse;
+    padding-left: 5px;
+}
+table{
+    th{
+        text-align: left;
+        height: 25px;
+    }
+    .td-id, .td-preis{
+        width: 20px;
+    }
+    .td-name{
+        width: 20%;
+    }
+    .td-beschreibung{
+        width: 55%;
+    }
+    .td-erstellung{
+        width: 100% / 4;
+    }
+}
+
+#zaehler, .counter{
+    font-size: 20px;
+}
+.counter{
+    cursor: pointer;
+}
 </style>

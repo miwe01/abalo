@@ -1,7 +1,7 @@
 <template>
     <div>
     <h1>Artikeleingabe</h1>
-        <p>Bitte geben sie einen Artikel ein:</p>
+        <p>Bitte geben sie ihren Artikel ein den sie verkaufen möchten:</p>
     <form action="" method="post">
         <table>
             <tr>
@@ -9,7 +9,7 @@
                     <label for="artikelname">Name: </label>
                 </td>
                 <td>
-                    <input type="text" id="artikelname" name="artikelname">
+                    <input type="text" id="artikelname" name="artikelname" autofocus>
                 </td>
             </tr>
             <tr>
@@ -99,6 +99,10 @@ export default{
 
 <style scoped>
 input{
-    border: 1px solid black;
+    margin-top: 5px;
+}
+
+button{
+    margin-top: 15px;
 }
 </style>
