@@ -37,7 +37,6 @@
                 </td>
             </tr>
         </table>
-
     </form>
         <div id="response"></div>
 
@@ -45,6 +44,7 @@
 </template>
 
 <script>
+
 
 
 export default{
@@ -63,7 +63,6 @@ export default{
             a.push(this.errorBorder('artikelname'));
             a.push(this.errorBorder('artikelpreis'));
             a.push(this.errorBorder('artikelbeschreibung'));
-
             for (i=0;i<a.length;i++){
                 if (a[i] === true)
                     return;
@@ -84,13 +83,17 @@ export default{
             return document.getElementById(id).value;
         },
         sendData(name, price, description){
+            this.$isLoading(true)
             axios
                 .post("/api/articles/",{
                     name: name,
                     price: price,
                     description: description
                 })
-                .then(response => (document.getElementById('response').innerHTML= "Produkt wurde hinzugefügt"))
+                .then(response => {
+                    this.$isLoading(false)
+                    document.getElementById('response').innerHTML= "Produkt wurde hinzugefügt"
+                })
                 .catch(error => console.log(error))
         }
     }

@@ -14,6 +14,7 @@
 </template>
 
 <script>
+
 export default {
 name: "Tab-Artikelsuche",
     data: function(){
@@ -30,11 +31,17 @@ name: "Tab-Artikelsuche",
             if (l.length === 0)
                 this.articles = "";
         },
-        sendAjax(text) {
+        sendAjax(text){
             let s = text;
+            this.$isLoading(true)
+
             axios
                 .get("/api/articles/?search=" + s + "&limit=" + this.limit + "&offset=" + this.offset)
-                .then(response => (this.articles = response.data))
+                .then(response => {
+
+                    //this.$isLoading(false)
+                    this.articles = response.data
+                })
                 .catch(error => console.log(error))
         }
     }

@@ -18,6 +18,8 @@
 </template>
 
 <script>
+
+
 export default {
     name: "Tab-Artikelliste",
     data: function () {
@@ -28,9 +30,13 @@ export default {
     // Aufgabe12
     methods: {
         addEvent: function () {
+            this.$isLoading(true)
             axios
                 .get("/api/articles/?search=&limit=" + this.limit + "&offset=" + this.offset)
-                .then(response => (this.allarticles = response.data))
+                .then(response => {
+
+                    this.allarticles = response.data
+                })
                 .catch(error => console.log(error))
         },
         // seitenanzahl ändern

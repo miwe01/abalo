@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var socket = new WebSocket('ws://localhost:8000/demo');
+    socket.onmessage = function(event){
+        var jsonObject = JSON.parse(event.data);
+        if (jsonObject.data == 2){
+            console.log("Hidden Text");
+        }
+    }
+</script>
+</body>
+</html>
