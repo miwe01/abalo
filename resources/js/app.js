@@ -6,14 +6,18 @@
 
 require('./bootstrap');
 require('axios');
-
-window.axios.defaults.headers.common = {
-    'X-Requested-With': 'XMLHttpRequest',
-    'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-};
-
-
 window.Vue = require('vue').default;
+
+import loading from 'vuejs-loading-screen'
+Vue.use(loading, {
+    bg: 'rgb(255, 255, 255, 0.5)',
+    icon: 'spinner',
+    size: 5,
+    icon_color: 'black',
+})
+
+
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -26,7 +30,14 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-let form = Vue.component('example-component', require('./components/ArtikelEingabe.vue').default);
+let tabArtikeleingabe = Vue.component('site-header', require('./components/Tab-ArtikelEingabe.vue').default);
+let header = Vue.component('site-header', require('./components/Site-Header.vue').default);
+let body = Vue.component('site-body', require('./components/Site-Body.vue').default);
+let footer = Vue.component('site-footer', require('./components/Site-Footer.vue').default);
+let tabHome = Vue.component('tab-home', require('./components/Tab-Home.vue').default);
+let tabArtikelsuche = Vue.component('tab-home', require('./components/Tab-Artikelsuche.vue').default);
+let tabArtikelliste = Vue.component('tab-artikelliste', require('./components/Tab-Artikelliste.vue').default);
+let tabImpressum = Vue.component('tab-impressum', require('./components/Tab-Impressum.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -34,9 +45,47 @@ let form = Vue.component('example-component', require('./components/ArtikelEinga
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app',
+new Vue({
+    /* Aufgabe8 */
+    el: "#app",
+
+    data: {
+        Impressum: '',
+        currentTab: "home",
+        tabs: ['home', 'artikelliste', 'artikelsuche', 'artikeleingabe'],
+    },
+    computed: {
+        currentTabComponent: function() {
+            return "tab-" + this.currentTab;
+        }
+    },
+    // Aufgabe10
+    // Methode um Klick Event an Element zu binden
+    methods:{
+        addEventToMenu: function(id, tab){
+            document.getElementById(id).addEventListener('click', function() {
+                this.currentTab = tab;
+            }.bind(this), false);
+        }
+    },
     components:{
-        'artikel-form' : form
-    }
+        'tab-artikeleingabe' : tabArtikeleingabe,
+        'site-header': header,
+        'site-body': body,
+        'site-footer': footer,
+        'tab-home': tabHome,
+        'tab-artikelsuche': tabArtikelsuche,
+        'tab-artikelliste': tabArtikelliste,
+        'tab-impressum': tabImpressum,
+    },
+    mounted: function(){
+        // Nachdem auch die ganze Webseite geladen wurde (auch import)
+        window.addEventListener('load', () => {
+            this.addEventToMenu('li-Kategorien', 'artikelliste');
+            this.addEventToMenu('li-Home', 'home');
+            this.addEventToMenu('li-Verkaufen', 'artikeleingabe');
+            this.addEventToMenu('li-Unternehmen', 'artikelsuche');
+        })
+    },
+
 });
