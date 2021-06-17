@@ -5,7 +5,15 @@
         <th>ID</th><th>Name</th><th>Preis</th><th>Beschreibung</th><th>Erstellungsdatum</th>
         <tr v-for="item in allarticles">
             <td class="td-id">{{item.id}}</td> <td class="td-name">{{item.ab_name}}</td><td class="td-preis">{{ item.ab_price }}€</td>
-            <td class="td-beschreibung">{{ item.ab_description }}</td><td class="td-erstellung">{{ item.ab_createdate }}</td>
+            <td class="td-beschreibung">{{ item.ab_description }}</td>
+            <td class="td-erstellung">{{ item.ab_createdate }}</td>
+            <!-- if benutzer angemeldet und artikel seiner -->
+<!--            <td v-bind:id="item.id" style="display: none" v-if="angemeldeterBenutzer(item.ab_creator_id)"><button @click="">Artikel jetzt als Angebot anbieten</button></td>-->
+            <td v-if="hisArticle == item.ab_creator_id">
+                <button @click="angebotSenden(item.ab_name, item.ab_creator_id)">Artikel jetzt als Angebot anbieten</button>
+            </td>
+
+            <template v-if="checkAngebot(item.ab_name)"></template>
         </tr>
         </table>
         <div>
@@ -18,13 +26,12 @@
 </template>
 
 <script>
-
-
+var socket = new WebSocket('ws://localhost:8000/demo');
 export default {
     name: "Tab-Artikelliste",
     data: function () {
         return {
-            allarticles: "", zaehler: 0, offset: 0, limit: 5
+            allarticles: "", hisArticle: "", zaehler: 0, offset: 0, limit: 5
         }
     },
     // Aufgabe12
@@ -34,8 +41,9 @@ export default {
             axios
                 .get("/api/articles/?search=&limit=" + this.limit + "&offset=" + this.offset)
                 .then(response => {
-
+                    this.$isLoading(false)
                     this.allarticles = response.data
+                    console.log(this.allarticles);
                 })
                 .catch(error => console.log(error))
         },
@@ -53,10 +61,80 @@ export default {
                 this.offset -= this.limit;
                 this.addEvent();
             }
+        },
+        angebotSenden: function(artikelname, verkaueferid){
+            let object = {
+                action: 'echo',
+                data: '{"id":4, "message":"' + artikelname + '", "seller":' + verkaueferid + '}'
+            }
+            socket.send(JSON.stringify(object))
+
+        },
+        checkAngebot: function(itemname){
+
+        },
+        // gibt Array von Artikeln zurück die gerade angezeigt werden
+        getallArticles: function(){
+            let artikelNamen =[];
+            var outputData = this.allarticles.map( Object.values );
+            for (let i=0; i<outputData.length;i++){
+                for (let j=0; j<outputData[i].length;j++){
+                    if (j === 1){
+                        artikelNamen[artikelNamen.length] = outputData[i][j];
+                    }
+                }
+
+            }
+            return artikelNamen;
         }
+
     },
-    mounted: function () {
-        this.addEvent();
+    computed:{
+
+    },
+    created: function () {
+        // soll nur auf Angebot hören M5 A10
+        // var socket = new WebSocket('ws://localhost:8000/demo');
+        let vm = this;
+        socket.onmessage = function(event) {
+            var jsonObject = JSON.parse(event.data);
+            var json = JSON.parse(jsonObject.data);
+            console.log(json);
+
+            // Wenn Angebot Naricht reinkommt
+            if (json.id === 4){
+                var seller = json.seller;
+                // checkt wenn gleicher Verkäufer ist wenn ja bekommt er nicht die Angebot Meldung
+                axios
+                    .get("/checkAktuellenBenutzer?id=" + seller)
+                    .then(response => {
+                        console.log("Response " + response.data);
+                        if (response.data === 1)
+                        {
+                            if(vm.getallArticles().includes(json.message)){
+                                alert("Der Artikel " + json.message + " wird nun günstiger angeboten! Greifen Sie schnell zu.“");
+                            }
+                        }
+                    })
+                    .catch(error => console.log(error))
+
+                // Angebotener Artikel ist momentan in angezeigter Artikelliste
+
+                // let a = setTimeout(vm.getallArticles(),1000);
+                // console.log("check + " + a);
+
+            }
+
+        }
+        //this.hisArticle = 7;
+        axios
+            .get("/eingeloggterBenutzer")
+            .then(response => {
+                this.hisArticle = response.data
+                this.addEvent();
+            })
+            .catch(error => console.log(error))
+
     }
 
 }

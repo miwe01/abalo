@@ -58,6 +58,17 @@ class Article extends Model
 
         }
         return 1;
+    }
 
+    public function getArticleName($id){
+        if(isset($id)){
+            return DB::table('ab_article')->where('id', $id)->get('ab_name');
+        }
+    }
+    public function getArticleSeller($id){
+        if(isset($id)){
+            $creatorid = DB::table('ab_article')->where('id', $id)->value('ab_creator_id');
+            return DB::table('ab_user')->select('ab_name')->where('id', $creatorid)->value('ab_name');
+        }
     }
 }

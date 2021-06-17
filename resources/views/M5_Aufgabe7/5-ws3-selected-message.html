@@ -9,10 +9,16 @@
     var socket = new WebSocket('ws://localhost:8000/demo');
     socket.onmessage = function(event){
         var jsonObject = JSON.parse(event.data);
-        if (jsonObject.data == 2){
-            console.log("Hidden Text");
+        // console.log(jsonObject.data);
+        var json = JSON.parse(jsonObject.data);
+
+        // console.log(json.age);
+        if (json.id == 2){
+            console.log(json.message);
         }
     }
+
+
 </script>
 </body>
 </html>

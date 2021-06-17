@@ -15,12 +15,13 @@
         "resolve-url-loader": "^3.1.2",
         "sass": "^1.32.11",
         "sass-loader": "^11.0.1",
+        "type": "module",
         "vue": "^2.6.12",
         "vue-loader": "^15.9.5",
-        "vue-template-compiler": "^2.6.12",
-        "type": "module"
+        "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "vue-axios": "^3.2.4"
+        "vue-axios": "^3.2.4",
+        "vuejs-loading-screen": "^1.0.9"
     }
 }

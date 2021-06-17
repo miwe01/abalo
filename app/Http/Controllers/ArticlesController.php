@@ -7,6 +7,7 @@ use App\Models\ShoppingCart;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ArticlesController extends Controller
 {
@@ -73,4 +74,87 @@ class ArticlesController extends Controller
         ((new ShoppingCart)->addShoppingCart());
         return view('newsite', ['articles'=>$allArticles, 'shoppingCartArticles'=>$shoppingCartArticles]);
     }
+
+    // view New Site with single file components
+    public function viewNewSite(Request $r){
+        // checkt ob $user existiert, gilt nur für angemeldete Benutzer
+        $user = "";
+        $seller = "";
+
+        if ($r->session()->exists('abalo_user') && $r->session()->exists('seller')){
+            $user = $r->session()->get('abalo_user');
+            $seller = $r->session()->get('seller');
+        }
+        return view('artikeleingabe_vue', ['user' => $user, 'seller'=>$seller]);
+    }
+
+    //sell Article api
+    public function sellArticle_api(Request $r){
+            if ($r->session()->exists('abalo_user')){
+                if ($r->id != ""){
+                    // ArtikelName bekommen und wer der Seller von dem Artikel ist
+                    $articleName = (new \App\Models\Article)->getArticleName($r->id);
+                    $articleSeller = (new \App\Models\Article)->getArticleSeller($r->id);
+                    $r->session()->put('seller', $articleSeller);
+
+                    $client = new \Bloatless\WebSocket\Client;
+                    $client->connect('127.0.0.1', 8000, '/demo');
+                    $client->sendData(json_encode([
+                                'action' => 'echo',
+                                'data' => '{"id":3, "artikelid":3, "message":'. $articleName . ', "seller":"' . $articleSeller . '"}']
+                        )
+                    );
+                    echo "Daten gesendet";
+                }
+            }
+
+        }
+
+   // checkt wenn eingeloggter Benutzer, Artikel Besitzer ist
+    public function eingeloggterBenutzerID(Request $r){
+        if ($r->session()->exists('abalo_id')) {
+            return $r->session()->get('abalo_id');
+        }
+//            if ($r->id != ""){
+//                $articleSeller = (new \App\Models\Article)->getArticleSeller($r->id);
+////                echo $r->session()->get('abalo_user');
+////                echo $articleSeller;
+//                //
+//                //
+//                // || danach wegmachen nur für Test Zwecke!!!!!!!!!!!!!!!!
+//                //
+//                //
+//                if ($articleSeller == "seller3" || $articleSeller == $r->session()->get('abalo_user')){
+//                    return "ja";
+//                }
+//
+//            }
+       // }
+
+
+    }
+
+    public function checkAktuellenBenutzer(Request $r)
+    {
+        $articleSeller = "";
+        // wenn Id mitgeschickt gibt Namen zurück
+        if (!isset($r->id)){
+            die("Parameter nicht gesetzt");
+        }
+        if (is_numeric($r->id))
+            $articleSeller = (new \App\Models\Article)->getArticleSeller($r->id);
+        else
+            $articleSeller = $r->id;
+
+        // wenn Benutzer eingeloggt
+        if ($r->session()->exists('abalo_id')) {
+            // Wenn Benutzer nicht gleich Verkauefer ist
+            if ($articleSeller != $r->session()->get('abalo_user'))
+                return "1";
+        }
+        return "2";
+    }
+
 }
+
+

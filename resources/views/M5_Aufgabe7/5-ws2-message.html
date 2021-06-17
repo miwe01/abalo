@@ -7,10 +7,16 @@
 <body>
 <script>
     var exampleSocket = new WebSocket("ws://localhost:8000/demo");
+
     exampleSocket.onmessage = function (event){
         var jsonObject = JSON.parse(event.data);
+
         console.log("Message received: " + jsonObject.data);
+
     }
+
 </script>
+
+
 </body>
 </html>

@@ -20,9 +20,25 @@ Route::get('/', function () {
 Route::get('/testdata', [\App\Http\Controllers\AbTestDataController::class, 'index']);
 
 
-Route::get('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
-Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
-Route::get('/isloggedin', [App\Http\Controllers\AuthController::class, 'isloggedin'])->name('haslogin');
+Route::group(['middleware' => ['web']], function () {
+    // artikel verkaufen
+    Route::get('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
+    Route::get('/login2', [App\Http\Controllers\AuthController::class, 'login2'])->name('login2');
+
+    Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+    Route::get('/isloggedin', [App\Http\Controllers\AuthController::class, 'isloggedin'])->name('haslogin');
+
+    Route::get('/articles/{id}/sold', [\App\Http\Controllers\ArticlesController::class, 'sellArticle_api']);
+
+    // Artikeleingabe Vue
+    Route::get('artikeleingabe', [\App\Http\Controllers\ArticlesController::class, 'viewNewSite']);
+    Route::get('eingeloggterBenutzer', [\App\Http\Controllers\ArticlesController::class, 'eingeloggterBenutzerID']);
+
+    Route::get('/checkAktuellenBenutzer', [\App\Http\Controllers\ArticlesController::class, 'checkAktuellenBenutzer']);
+
+});
+
+
 
 Route::get('/articles', [App\Http\Controllers\ArticlesController::class, 'search']);
 Route::get('/menue', function(){
@@ -53,7 +69,4 @@ Route::get('/api/addArticles/', [\App\Http\Controllers\ArticlesController::class
 // New Site
 Route::get('/newsite', [\App\Http\Controllers\ArticlesController::class, 'newSite']);
 
-// Artikeleingabe Vue
-Route::get('artikeleingabe', function(){
-   return view('artikeleingabe_vue');
-});
+

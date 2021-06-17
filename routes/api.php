@@ -25,3 +25,10 @@ Route::get('/articles', "ArticlesController@all_api");
 Route::get('/articles', [\App\Http\Controllers\ArticlesController::class, 'allIds_api']);
 //
 Route::post('/articles', [\App\Http\Controllers\ArticlesController::class, 'addArticle_api']);
+
+
+
+
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/articles/{id}/sold', [\App\Http\Controllers\ArticlesController::class, 'sellArticle_api']);
+});
