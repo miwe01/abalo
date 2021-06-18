@@ -27,16 +27,22 @@
 require __DIR__ . '/../src/Client.php';
 $client = new \Bloatless\WebSocket\Client;
 
-//$client->connect('127.0.0.1', 8000, '/demo');
-//$client->sendData(json_encode([
-//            'action' => 'echo',
-//            'data' => 'Websockets']
-//    )
-//);
+$client->connect('127.0.0.1', 8000, '/demo');
+$client->sendData(json_encode([
+            'action' => 'echo',
+            'data' => 'Websockets']
+    )
+);
 
 $client->connect('127.0.0.1', 8000, '/demo');
 $client->sendData(json_encode([
             'action' => 'echo',
-            'data' => '{"id":2, "message":"hidden Text"}']
+            'data' => '{"id":0, "message":"hidden Text"}']
+    )
+);
+
+$client->sendData(json_encode([
+            'action' => 'echo',
+            'data' => '{"id":1, "message":"Websockets mit Vue"}']
     )
 );

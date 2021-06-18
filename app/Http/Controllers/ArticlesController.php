@@ -88,6 +88,7 @@ class ArticlesController extends Controller
         return view('artikeleingabe_vue', ['user' => $user, 'seller'=>$seller]);
     }
 
+    // M5 Aufgabe 9
     //sell Article api
     public function sellArticle_api(Request $r){
             if ($r->session()->exists('abalo_user')){
@@ -95,13 +96,12 @@ class ArticlesController extends Controller
                     // ArtikelName bekommen und wer der Seller von dem Artikel ist
                     $articleName = (new \App\Models\Article)->getArticleName($r->id);
                     $articleSeller = (new \App\Models\Article)->getArticleSeller($r->id);
-                    $r->session()->put('seller', $articleSeller);
 
                     $client = new \Bloatless\WebSocket\Client;
                     $client->connect('127.0.0.1', 8000, '/demo');
                     $client->sendData(json_encode([
                                 'action' => 'echo',
-                                'data' => '{"id":3, "artikelid":3, "message":'. $articleName . ', "seller":"' . $articleSeller . '"}']
+                                'data' => '{"id":3, "message":'. $articleName . ', "seller":"' . $articleSeller . '"}']
                         )
                     );
                     echo "Daten gesendet";
@@ -115,6 +115,7 @@ class ArticlesController extends Controller
         if ($r->session()->exists('abalo_id')) {
             return $r->session()->get('abalo_id');
         }
+        return -1;
 //            if ($r->id != ""){
 //                $articleSeller = (new \App\Models\Article)->getArticleSeller($r->id);
 ////                echo $r->session()->get('abalo_user');
@@ -134,6 +135,10 @@ class ArticlesController extends Controller
 
     }
 
+    // Checkt aktuellen User und gibt Statuscodes zurück
+    // 1: Eingeloggter User != Verkauefer von Artikel
+    // 2: Eingeloggter User = Verkauefer von Artikel
+    // 3: Kein Eingeloggter User
     public function checkAktuellenBenutzer(Request $r)
     {
         $articleSeller = "";
@@ -151,8 +156,10 @@ class ArticlesController extends Controller
             // Wenn Benutzer nicht gleich Verkauefer ist
             if ($articleSeller != $r->session()->get('abalo_user'))
                 return "1";
+            return "2";
         }
-        return "2";
+        return "3";
+
     }
 
 }

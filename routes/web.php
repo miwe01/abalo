@@ -28,14 +28,17 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
     Route::get('/isloggedin', [App\Http\Controllers\AuthController::class, 'isloggedin'])->name('haslogin');
 
-    Route::get('/articles/{id}/sold', [\App\Http\Controllers\ArticlesController::class, 'sellArticle_api']);
-
     // Artikeleingabe Vue
     Route::get('artikeleingabe', [\App\Http\Controllers\ArticlesController::class, 'viewNewSite']);
+
+
+
+
+
     Route::get('eingeloggterBenutzer', [\App\Http\Controllers\ArticlesController::class, 'eingeloggterBenutzerID']);
-
     Route::get('/checkAktuellenBenutzer', [\App\Http\Controllers\ArticlesController::class, 'checkAktuellenBenutzer']);
-
+    // M5 Aufgabe9
+    Route::post('/articles/{id}/sold', [\App\Http\Controllers\ArticlesController::class, 'sellArticle_api']);
 });
 
 

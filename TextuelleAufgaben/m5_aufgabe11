@@ -1,0 +1,10 @@
+Aufgabe 11
+Erweiterungen. Nenne Sie drei weitere Erweiterungsmöglichkeiten in Abalo durch
+WebSockets. Erklären Sie für jede Möglichkeit den Kundennutzen.
+
+1. Wenn ein neuer Artikel angeboten wird könnte man jeden Kunden die Naricht mitteilen.
+   Dadurch sind die Kunden immer auf dem neusten Stand und können diesen Artikel direkt kaufen.
+
+2. Artikel ist fast ausverkauft, dadurch wissen Kunden, sie müssen jetzt schnell zugreifen.
+
+3. Websocket für Features. Wenn eine neues Feature auf die Abalo Seite integriert wird, kann man direkt den Kunden informieren.

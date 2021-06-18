@@ -32,7 +32,6 @@
                 <td>
                 </td>
                 <td>
-                    <!--<button type="submit" name="artikelsubmit">Senden</button>-->
                     <button v-on:click="check()">Senden</button>
                 </td>
             </tr>
@@ -83,7 +82,6 @@ export default{
             return document.getElementById(id).value;
         },
         sendData(name, price, description){
-            this.$isLoading(true)
             axios
                 .post("/api/articles/",{
                     name: name,
@@ -91,7 +89,6 @@ export default{
                     description: description
                 })
                 .then(response => {
-                    this.$isLoading(false)
                     document.getElementById('response').innerHTML= "Produkt wurde hinzugefügt"
                 })
                 .catch(error => console.log(error))

@@ -15,7 +15,7 @@ Eingeloggter User: {{$user}}<br>
 Verkäufer von dem Artikel: {{$seller}}<br>
 
 <script>
-    // M5 Aufgabe 8 && 9
+    // M5 Aufgabe 8
     function sendText() {
         let msg = {
             action: 'echo',
@@ -26,7 +26,7 @@ Verkäufer von dem Artikel: {{$seller}}<br>
 
     var socket = new WebSocket("ws://localhost:8000/demo");
     socket.addEventListener('open', function (event) {
-        // sendText();
+        //sendText();
     });
 
 
@@ -42,9 +42,9 @@ Verkäufer von dem Artikel: {{$seller}}<br>
             axios
                 .get("/checkAktuellenBenutzer?id=" + seller)
                 .then(response => {
+                    // 1yyyy = eingeloggter Benutzer = Verkauefer
                     if (response.data !== 1)
                         alert("Großartig! Ihr Artikel " + json.message[0].ab_name + " wurde erfolgreich verkauft!")
-
                 })
                 .catch(error => console.log(error))
 

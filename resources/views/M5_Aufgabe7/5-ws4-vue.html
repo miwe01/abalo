@@ -20,11 +20,11 @@
             let self = this; // this in Funktion würde auf Funktion zeigen
             socket.onmessage = function(event){
                 var jsonObject = JSON.parse(event.data);
-                console.log(jsonObject);
+                var json = JSON.parse(jsonObject.data);
 
-                if (jsonObject.data == 2){
-                    self.message = "Websocket mit Vue Beispiel";
-
+                // console.log(json.age);
+                if (json.id == 1){
+                    self.message =  json.message;
                 }
             }
         }

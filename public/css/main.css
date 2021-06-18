@@ -1,10 +1,13 @@
+
 h1{
     display: inline;
     margin-right: 50px;
 }
+a{
+    cursor: pointer;
+}
 
 #li-Home, #li-Kategorien, #li-Verkaufen, #li-Unternehmen{
-
     display: inline-block;
     list-style-type: none;
     margin: 5px 0;
@@ -30,14 +33,15 @@ h1{
     padding: 0;
     position: absolute;
     display: none;
-    max-width: 90px;
-    left: 460px;
+    max-width: 120px;
+    left: 520px;
     margin-top: -10px;
+    border: 1px solid black;
 }
 #sub-ul a{
     display: block;
     padding: 5px 5px;
-    background-color: gray;
+    background-color: #f0f5f1;
 }
 #sub-ul li{
     list-style-type: none;

@@ -30,5 +30,5 @@ Route::post('/articles', [\App\Http\Controllers\ArticlesController::class, 'addA
 
 
 Route::group(['middleware' => ['web']], function () {
-    Route::get('/articles/{id}/sold', [\App\Http\Controllers\ArticlesController::class, 'sellArticle_api']);
+
 });
