@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrapper{
+            height: 1vh;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        img{
+            border: 1px dotted black;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+<div id="weather">
+</div>
+<div id="wrapper">
+</div>
+<script>
+    let xhr1 = new XMLHttpRequest();
+    // xhr.open('get', 'http://dataservice.accuweather.com/locations/v1/regions' +
+    //     '?apikey=2GF2x6GLSYe2zyWmgOJSLJcYvHR6zQon&language=en-us');
+
+    xhr1.open('get', 'http://dataservice.accuweather.com/forecasts/v1/daily/1day/228714' +
+        '?apikey=2GF2x6GLSYe2zyWmgOJSLJcYvHR6zQon&metric=true');
+
+
+    // xhr.open('get', 'http://dataservice.accuweather.com/alarms/v1/1day/{1}' +
+    //     '?apikey=2GF2x6GLSYe2zyWmgOJSLJcYvHR6zQon&language=en-us');
+    xhr1.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // Typical action to be performed when the document is ready:
+            let r = xhr1.responseText;
+            let json = JSON.parse(r);
+
+
+            let dayWeather = json.DailyForecasts[0].Day.IconPhrase;
+            let nightWeather = json.DailyForecasts[0].Night.IconPhrase;
+
+            let text = json.Headline.Text;
+            let temperature = json.DailyForecasts[0].Temperature;
+
+           // console.log("Heute gibt es " + wetter);
+            let p = document.createElement('p');
+            p.innerText = "Tag: " + dayWeather + "/ Nacht: " + nightWeather;
+
+
+            let p2 = document.createElement('p');
+            p2.innerText = "Minimum " + temperature.Minimum.Value + " °C " + "/ Maximum " + temperature.Maximum.Value + " °C";
+
+
+
+            document.getElementById('weather').append(p);
+            document.getElementById('weather').append(p2);
+
+
+        }
+    };
+    xhr1.send();
+
+    let xhr = new XMLHttpRequest();
+
+    // xhr.open('get', 'https://meme-api.herokuapp.com/gimme/cats');
+    let a = ["cats", "eyebleach", "awww", "dogpictures", "cat", "lookatmydog", "AnimalsBeingDerps"];
+    var rdm = a[Math.floor(Math.random()*a.length)];
+
+    xhr.open('get', 'https://meme-api.herokuapp.com/gimme/'+rdm+'/10');
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let resp = JSON.parse(xhr.responseText);
+            for (let i=0; i<resp.memes.length; i++){
+                let img = document.createElement('img');
+                img.setAttribute("src", resp.memes[i].url);
+                img.setAttribute('width', "auto");
+                img.setAttribute('height', "400px");
+                document.getElementById('wrapper').append(img);
+            }
+
+
+
+            // console.log(resp);
+            //
+            // let img = document.createElement('img');
+            // img.setAttribute("src", resp.preview[2]);
+            // document.getElementById('demo').append(img);
+        }
+    }
+    xhr.send();
+
+</script>
+</body>
+</html>
